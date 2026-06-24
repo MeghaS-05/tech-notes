@@ -4,10 +4,11 @@ This repository contains my personal notes, examples, and learning materials col
 #Tech Covered:
 1) Language
 2) Frontend Dev
-3) Backend DEv
+3) Backend Dev
 4) APIs
 5) Database
 6) Devops
+7) AI
 
 
 This repository will be continuously updated as I learn new technologies and deepen my understanding of existing ones. It serves as a personal knowledge base, revision guide, and record of my growth as a developer. Expect new notes, examples, and improvements over time.
