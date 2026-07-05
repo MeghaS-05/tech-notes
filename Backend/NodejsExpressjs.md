@@ -335,6 +335,28 @@ Types of middleware :
 5. Third-party Middleware — External packages
 6. Error Middleware — Handles error
 
+## Lifecycle of a Request Through Middleware:
+
+- Request received by the server
+- Passed through each middleware in sequence
+- Route handler processes the request
+- Response flows back through middleware (in reverse order)
+- Response sent to client
+
+The basic pattern of middleware in Express.js follows this structure:
+
+app.use((req, res, next) => {
+  // Middleware code goes here
+  console.log('Time:', Date.now());
+  
+  // Call next() to pass control to the next middleware function
+  next();
+});
+
+When you call next(), the next middleware in the stack is executed.
+If you don't call next(), the request-response cycle ends and no further middleware runs.
+
+
 ## Note Point 📌
 - Middleware runs between request and response.
 - It can modify request/response objects.
