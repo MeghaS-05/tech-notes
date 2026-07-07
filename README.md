@@ -1,4 +1,3 @@
-#Programming Notes Repository
 This repository contains my personal notes, examples, and learning materials collected while studying various programming languages, frameworks, and development technologies.
 
 #Tech Covered:
