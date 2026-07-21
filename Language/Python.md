@@ -91,3 +91,118 @@ Note:
 - Convert the input to the required type using `int()`, `float()`, etc.
 - Handle invalid user input to avoid `ValueError`.
 - Use **f-strings** for clean and readable formatted output (Python 3.6+).
+
+
+
+## Part 4: Operator & Control Flow
+
+### 4.1. Operator
+
+#### 1. Arithmetic Operators
+
+Operators for basic math: `+ - * / %`
+
+```python
+a, b=7,2
+print(a/ b)
+print(a// b)
+```
+
+#### 2. Relational Operators
+
+`== != > < >= <=` — compare values.
+
+```python
+a=[1,2]
+b=[1,2]
+print(a== b)
+print(a is b)
+```
+
+#### 3. Logical Operators
+
+`Operator : and or not`
+
+Both use **short-circuit evaluation** — the second condition is skipped if the first already determines the result. This prevents errors like division by zero.
+
+```python
+a, b=0,5
+if a!=0 and(b/ a)>1:
+print("safe")
+```
+
+#### 4. Bitwise Operators
+
+`& | ^ ~ << >>` — operate on binary representation.
+
+**Theory:**
+
+- `&` (AND), `|` (OR), `^` (XOR), `~` (complement/NOT)
+- `<<` shifts bits left (multiplies by 2ⁿ), `>>` shifts bits right (divides by 2ⁿ)
+- XOR property: `x ^ x = 0` and `x ^ 0 = x` — used to find unique elements.
+- `n & (n-1)` clears the lowest set bit — used to check powers of 2.
+
+```python
+n=5
+print(n&1)
+print(1<<3)
+print(n&(n-1))
+```
+
+#### 5. Ternary / Conditional Expression
+
+```python
+max_val= a
+if a> b
+else b
+```
+
+### 4.2. Control Flow
+
+#### 1. if / else if / else
+
+Executes a block only if a condition is true; checks conditions top-to-bottom, stops at the first true one.
+
+```python
+marks=75
+if marks>=90:
+print("A grade")
+elif marks>=75:
+print("B grade")
+else:
+print("C grade")
+```
+
+#### 2. switch (Java) vs match-case (Python)
+
+Used to compare one variable against multiple fixed values, as a cleaner alternative to long if-else chains.
+
+```python
+day=3
+match day:
+case1:
+print("Mon")
+case2:
+print("Tue")
+case_:
+print("Invalid")
+```
+
+Python's `match-case` (3.10+) has **no fall-through issue** — each case is automatically isolated.
+
+#### 3. Nested Conditions
+
+```python
+if a>0:
+if b>0:
+print("Both positive")
+```
+
+#### 4. Assignment-in-condition Gotcha
+
+Java's compiler rejects `if (x = 5)` unless it evaluates to boolean, preventing an accidental assignment bug common in C-style languages. Python doesn't allow assignment in a plain condition at all — you need the **walrus operator** `:=` to intentionally assign inside an expression.
+
+```python
+if (x := 5) > 3:
+    print(x)  
+```
