@@ -160,18 +160,20 @@ int max=(a> b)? a: b;
 
 Executes a block only if a condition is true; checks conditions top-to-bottom, stops at the first true one.
 
+```java
 int marks=75;
 if(marks>=90){
   System.out.println("A grade");
 }elseif(marks>=75){
   System.out.println("B grade");
 }else{System.out.println("C grade");}
-
+```
 
 #### 2. switch (Java) vs match-case (Python)
 
 Used to compare one variable against multiple fixed values, as a cleaner alternative to long if-else chains.
 
+```java
 int day=3;
 switch(day){
 case1:
@@ -183,26 +185,27 @@ break;
 default:
 System.out.println("Invalid");
 }
-
+```
 
 **Important:** Missing `break` causes **fall-through** — execution continues into the next case, a common bug.
 
 #### 3. Nested Conditions
 
+```java
 if(a>0){
 if(b>0){
 System.out.println("Both positive");
 }
 }
-
+```
 
 #### 4. Assignment-in-condition Gotcha
 
 **Theory:** Java's compiler rejects `if (x = 5)` unless it evaluates to boolean, preventing an accidental assignment bug common in C-style languages. Python doesn't allow assignment in a plain condition at all — you need the **walrus operator** `:=` to intentionally assign inside an expression.
 
-Ex:
+```java
 boolean flag;
 if (flag = true) {
 System.out.println("runs");
 }
-
+```
