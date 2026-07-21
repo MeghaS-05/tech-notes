@@ -84,3 +84,125 @@ Note:
 - Close the `Scanner` object after use (`sc.close()`).
 - Be careful when using `nextInt()` followed by `nextLine()` because the newline character remains in the input buffer.
 - Use `printf()` when formatted output is required.
+
+
+
+## Part 4 : Operator & Control Flow
+
+### 4.1. Operator
+
+#### 1. Arithmetic Operators
+
+Operators for basic math: `+ - * / %`
+
+- Java's `/` between two integers does **integer division** (truncates decimal part).
+- **Modulo with negative numbers differs**: Java's result takes the sign of the *dividend*, Python's takes the sign of the *divisor*. This is a common bug source when translating code between languages.
+
+```java
+
+int a=7, b=2;
+System.out.println(a/b);
+```
+
+#### 2. Relational Operators
+
+`== != > < >= <=` — compare values.
+
+**Theory:**
+
+- Java: `==` on objects compares **memory reference**, not content → use `.equals()` for value comparison.
+- Python: `==` compares **value**, `is` compares **identity** (memory reference).
+
+```java
+String s1=newString("hi");
+String s2=newString("hi");
+System.out.println(s1== s2);
+```
+
+#### 3. Logical Operators
+
+`Operator : && || !`
+
+**Theory:** Both use **short-circuit evaluation** — the second condition is skipped if the first already determines the result. This prevents errors like division by zero.
+
+```java
+int a=0, b=5;
+if(a!=0&&(b/ a)>1){
+System.out.println("safe");
+}
+```
+
+#### 4. Bitwise Operators
+
+`& | ^ ~ << >>` — operate on binary representation.
+
+**Theory:**
+
+- `&` (AND), `|` (OR), `^` (XOR), `~` (complement/NOT)
+- `<<` shifts bits left (multiplies by 2ⁿ), `>>` shifts bits right (divides by 2ⁿ)
+- XOR property: `x ^ x = 0` and `x ^ 0 = x` — used to find unique elements.
+- `n & (n-1)` clears the lowest set bit — used to check powers of 2.
+
+```java
+int n=5;
+System.out.println(n&1);
+```
+
+#### 5. Ternary / Conditional Expression
+
+```java
+int max=(a> b)? a: b;
+```
+
+### 4.2. Control Flow
+
+#### 1. if / else if / else
+
+Executes a block only if a condition is true; checks conditions top-to-bottom, stops at the first true one.
+
+int marks=75;
+if(marks>=90){
+  System.out.println("A grade");
+}elseif(marks>=75){
+  System.out.println("B grade");
+}else{System.out.println("C grade");}
+
+
+#### 2. switch (Java) vs match-case (Python)
+
+Used to compare one variable against multiple fixed values, as a cleaner alternative to long if-else chains.
+
+int day=3;
+switch(day){
+case1:
+System.out.println("Mon");
+break;
+case2:
+System.out.println("Tue");
+break;
+default:
+System.out.println("Invalid");
+}
+
+
+**Important:** Missing `break` causes **fall-through** — execution continues into the next case, a common bug.
+
+#### 3. Nested Conditions
+
+if(a>0){
+if(b>0){
+System.out.println("Both positive");
+}
+}
+
+
+#### 4. Assignment-in-condition Gotcha
+
+**Theory:** Java's compiler rejects `if (x = 5)` unless it evaluates to boolean, preventing an accidental assignment bug common in C-style languages. Python doesn't allow assignment in a plain condition at all — you need the **walrus operator** `:=` to intentionally assign inside an expression.
+
+Ex:
+boolean flag;
+if (flag = true) {
+System.out.println("runs");
+}
+
