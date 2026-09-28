@@ -209,3 +209,112 @@ if (flag = true) {
 System.out.println("runs");
 }
 ```
+
+### 4.3. Loops
+
+### 4.4. Jump Statements
+
+## **Part 5 : Type Casting**
+
+## **Type casting** means converting a value from one data type to another.
+
+There are two types:
+
+## **1. Widening Casting — Automatic**
+
+Converting a **smaller type → larger type**.
+
+Java does this automatically.
+
+```java
+int a = 10;
+double b = a;
+```
+
+Here:
+
+```
+int → double
+```
+
+No explicit casting is required.
+
+### **Widening order**
+
+```
+byte → short → int → long → float → double
+```
+
+Example:
+
+```java
+int a = 10;
+double b = a;
+```
+
+**`b`** becomes **`10.0`**.
+
+---
+
+## **2. Narrowing Casting — Explicit**
+
+Converting a **larger type → smaller type**.
+
+You must manually specify the target type.
+
+### **Syntax**
+
+```java
+dataType variable = (dataType) value;
+```
+
+### **Example**
+
+```java
+double a = 10.75;
+int b = (int) a;
+```
+
+**`b`** becomes **`10`**.
+
+The decimal part **`.75`** is lost.
+
+---
+
+## **Important Rules**
+
+- **Widening casting is automatic.**
+- **Narrowing casting requires explicit casting.**
+- Narrowing can cause **loss of data/precision**.
+- Casting does not change the original variable.
+- **`int / int`** performs **integer division**.
+- Cast one value to **`double`** when you need decimal division.
+
+Example:
+
+```java
+int a = 5;
+int b = 2;
+
+double result = a / b;
+```
+
+Result:
+
+```
+2.0
+```
+
+Because **`a / b`** happens as integer division first.
+
+Correct:
+
+```java
+double result = (double) a / b;
+```
+
+Result:
+
+```
+2.5
+```
