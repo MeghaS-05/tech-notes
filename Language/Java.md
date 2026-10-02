@@ -210,9 +210,104 @@ System.out.println("runs");
 }
 ```
 
-### 4.3. Loops
+### **4.3. Loops & Jump Statements**
 
-### 4.4. Jump Statements
+A **loop** is used to execute a block of code repeatedly as long as a condition is satisfied.
+
+#### **Types of Loops in Java**
+
+### **1. `for` loop**
+
+Used when you **know how many times** you want to repeat something.
+
+**Syntax:**
+
+```java
+for (initialization; condition; update) {
+    // code
+}
+```
+
+**Example:**
+
+```java
+for (int i = 1; i <= 5; i++) {
+    System.out.println(i);
+}
+```
+
+**Flow:**
+
+```
+Initialization → Condition → Body → Update
+                       ↑        |
+                       └────────┘
+```
+
+---
+
+### **2. `while` loop**
+
+Used when the number of iterations is **not necessarily known beforehand**.
+
+**Syntax:**
+
+```java
+while (condition) {
+    // code
+}
+```
+
+The condition is checked **before** executing the loop body.
+
+---
+
+### **3. `do-while` loop**
+
+Similar to **`while`**, but the loop body executes **at least once**.
+
+**Syntax:**
+
+```java
+do {
+    // code
+} while (condition);
+```
+
+The condition is checked **after** executing the loop body.
+
+---
+
+## **`break`**
+
+Used to **completely terminate** the loop.
+
+```
+break → exits the loop
+```
+
+---
+
+## **`continue`**
+
+Used to **skip the current iteration** and move to the next iteration.
+
+```
+continue → skips current iteration
+```
+
+### **`return`**
+
+- **Exits from a method**.
+- Can optionally return a value.
+
+```java
+static int add() {
+    return 10 + 20;
+}
+```
+
+Here, **`return`** sends **`30`** back to the caller and exits the **`add()`** method.
 
 ## **Part 5 : Type Casting**
 
