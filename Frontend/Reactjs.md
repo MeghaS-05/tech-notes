@@ -1152,3 +1152,2260 @@ function App() {
   );
 }
 ```
+
+# **12. React Lists**
+
+**Definition:**
+
+Lists are used to render multiple elements from an array.
+
+### **A. Rendering Array with `map()`**
+
+**Syntax:**
+
+```jsx
+array.map((item) => (
+  <Element>{item}</Element>
+))
+```
+
+**Example:**
+
+```jsx
+function App() {
+  const fruits = ["Apple", "Mango", "Banana"];
+
+  return (
+    <ul>
+      {fruits.map((fruit) => (
+        <li key={fruit}>{fruit}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+### **B. List with Objects**
+
+**Syntax:**
+
+```jsx
+array.map((item) => (
+  <Element key={item.id}>
+    {item.property}
+  </Element>
+))
+```
+
+**Example:**
+
+```jsx
+function App() {
+  const users = [
+    { id: 1, name: "John" },
+    { id: 2, name: "Alice" }
+  ];
+
+  return (
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+### **C. List with Components**
+
+**Syntax:**
+
+```jsx
+array.map((item) => (
+  <Component key={item.id} {...item} />
+))
+```
+
+**Example:**
+
+```jsx
+function User({ name }) {
+  return <li>{name}</li>;
+}
+
+function App() {
+  const users = [
+    { id: 1, name: "John" },
+    { id: 2, name: "Alice" }
+  ];
+
+  return (
+    <ul>
+      {users.map((user) => (
+        <User key={user.id} name={user.name} />
+      ))}
+    </ul>
+  );
+}
+```
+
+A **form** in React is used to collect user input. React generally handles form values through **state**, making the form a **controlled component**.
+
+### **Types**
+
+1. **Controlled Forms**
+2. **Uncontrolled Forms**
+
+### **Sub-types of form inputs**
+
+- Text input
+- Password
+- Email
+- Number
+- Textarea
+- Select
+- Checkbox
+- Radio
+- File input
+
+### **Syntax — Controlled Form**
+
+```jsx
+import { useState } from "react";
+
+function Form() {
+  const [name, setName] = useState("");
+
+  return (
+    <form>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <p>Name: {name}</p>
+    </form>
+  );
+}
+```
+
+### **Example**
+
+```jsx
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  return (
+    <form>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+    </form>
+  );
+}
+```
+
+### **Controlled vs Uncontrolled**
+
+| **Controlled** | **Uncontrolled** |
+| --- | --- |
+| Value stored in React state | Value stored in DOM |
+| Uses **`value`** | Uses **`defaultValue`** |
+| Uses **`onChange`** | Usually uses **`ref`** |
+| Easier validation | Simpler for some cases |
+| React controls input | DOM controls input |
+
+### **Important**
+
+```jsx
+value={state}
+```
+
+makes an input controlled.
+
+```jsx
+defaultValue="John"
+```
+
+provides an initial value without controlling it through state.
+
+---
+
+# **React Forms Submit**
+
+Form submission is handled using the form's **`onSubmit`** event.
+
+### **Syntax**
+
+```jsx
+<form onSubmit={handleSubmit}>
+```
+
+```jsx
+function handleSubmit(e) {
+  e.preventDefault();
+}
+```
+
+### **Example**
+
+```jsx
+function Login() {
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(email);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <button type="submit">
+        Login
+      </button>
+    </form>
+  );
+}
+```
+
+### **Types of submission**
+
+1. **Normal browser submission**
+2. **React-controlled submission**
+3. **Async submission**
+
+### **Async example**
+
+```jsx
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const response = await fetch("/api/login", {
+    method: "POST",
+    body: JSON.stringify({ email })
+  });
+
+  const data = await response.json();
+};
+```
+
+### **Important**
+
+Always use:
+
+```jsx
+e.preventDefault();
+```
+
+when you don't want the browser to reload/navigate away.
+
+---
+
+# **React Textarea**
+
+### **Definition**
+
+**`textarea`** is used for multi-line text.
+
+Unlike HTML, React normally controls it using **`value`**.
+
+### **Syntax**
+
+```jsx
+<textarea
+  value={text}
+  onChange={(e) => setText(e.target.value)}
+/>
+```
+
+### **Example**
+
+```jsx
+function Message() {
+  const [message, setMessage] = useState("");
+
+  return (
+    <textarea
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+      placeholder="Enter message"
+    />
+  );
+}
+```
+
+### **Types**
+
+1. Controlled textarea
+2. Uncontrolled textarea
+
+### **Controlled**
+
+```jsx
+<textarea value={message} onChange={handleChange} />
+```
+
+### **Uncontrolled**
+
+```jsx
+<textarea defaultValue="Hello" ref={textRef} />
+```
+
+### **Important**
+
+Don't use:
+
+```jsx
+<textarea>
+  {message}
+</textarea>
+```
+
+for a controlled React textarea.
+
+Use:
+
+```jsx
+<textarea value={message} />
+```
+
+---
+
+# **React Select**
+
+### **Definition**
+
+**`select`** creates a dropdown menu.
+
+### **Syntax**
+
+```jsx
+<select value={country} onChange={handleChange}>
+  <option value="india">India</option>
+  <option value="usa">USA</option>
+</select>
+```
+
+### **Example**
+
+```jsx
+function Country() {
+  const [country, setCountry] = useState("");
+
+  return (
+    <>
+      <select
+        value={country}
+        onChange={(e) => setCountry(e.target.value)}
+      >
+        <option value="">Select Country</option>
+        <option value="india">India</option>
+        <option value="usa">USA</option>
+      </select>
+
+      <p>Selected: {country}</p>
+    </>
+  );
+}
+```
+
+### **Types**
+
+- Single select
+- Multiple select
+
+### **Multiple select**
+
+```jsx
+<select
+  multiple
+  value={countries}
+  onChange={(e) => {
+    const values = [...e.target.selectedOptions]
+      .map(option => option.value);
+
+    setCountries(values);
+  }}
+>
+```
+
+---
+
+# **React Multiple Inputs**
+
+### **Definition**
+
+A form may contain multiple inputs. Instead of creating separate handlers, we can use **one generic handler**.
+
+### **Syntax**
+
+```jsx
+const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  setForm({
+    ...form,
+    [name]: value
+  });
+};
+```
+
+### **Example**
+
+```jsx
+function Register() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    age: ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  return (
+    <form>
+      <input
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+      />
+
+      <input
+        name="email"
+        value={form.email}
+        onChange={handleChange}
+      />
+
+      <input
+        name="age"
+        value={form.age}
+        onChange={handleChange}
+      />
+    </form>
+  );
+}
+```
+
+### **Types**
+
+1. Separate state for each input
+2. Single object state
+3. Generic change handler
+
+### **Key concept**
+
+```jsx
+[name]: value
+```
+
+is a **computed property name**.
+
+---
+
+# **React Checkbox**
+
+### **Definition**
+
+Checkbox allows the user to select/deselect a boolean value.
+
+### **Syntax**
+
+```jsx
+<input
+  type="checkbox"
+  checked={isChecked}
+  onChange={(e) => setIsChecked(e.target.checked)}
+/>
+```
+
+### **Example**
+
+```jsx
+function Terms() {
+  const [accepted, setAccepted] = useState(false);
+
+  return (
+    <label>
+      <input
+        type="checkbox"
+        checked={accepted}
+        onChange={(e) => setAccepted(e.target.checked)}
+      />
+
+      Accept Terms
+    </label>
+  );
+}
+```
+
+### **Types**
+
+1. Single checkbox
+2. Multiple checkboxes
+3. Checkbox group
+4. Select all / deselect all
+
+### **Multiple checkboxes**
+
+```jsx
+const [skills, setSkills] = useState([]);
+
+const handleSkill = (e) => {
+  const { value, checked } = e.target;
+
+  setSkills(prev =>
+    checked
+      ? [...prev, value]
+      : prev.filter(skill => skill !== value)
+  );
+};
+```
+
+### **Important**
+
+Checkbox uses:
+
+```jsx
+checked
+```
+
+not:
+
+```jsx
+value
+```
+
+to represent its selected state.
+
+---
+
+# **React Radio**
+
+### **Definition**
+
+Radio buttons allow selecting **one option from a group**.
+
+### **Syntax**
+
+```jsx
+<input
+  type="radio"
+  name="gender"
+  value="male"
+  checked={gender === "male"}
+  onChange={(e) => setGender(e.target.value)}
+/>
+```
+
+### **Example**
+
+```jsx
+function Gender() {
+  const [gender, setGender] = useState("");
+
+  return (
+    <>
+      <label>
+        <input
+          type="radio"
+          name="gender"
+          value="male"
+          checked={gender === "male"}
+          onChange={(e) => setGender(e.target.value)}
+        />
+        Male
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="gender"
+          value="female"
+          checked={gender === "female"}
+          onChange={(e) => setGender(e.target.value)}
+        />
+        Female
+      </label>
+    </>
+  );
+}
+```
+
+### **Types**
+
+- Single radio group
+- Dynamic radio group
+
+### **Important**
+
+Radio buttons in the same group should have the same:
+
+```jsx
+name
+```
+
+---
+
+# **14. React Portals**
+
+### **Definition**
+
+A **Portal** allows a React component to render its UI into a different DOM node outside its normal parent DOM hierarchy.
+
+Useful for:
+
+- Modals
+- Dialogs
+- Tooltips
+- Dropdowns
+- Notifications
+
+### **Syntax**
+
+Modern React:
+
+```jsx
+import { createPortal } from "react-dom";
+
+createPortal(
+  <Component />,
+  document.getElementById("portal-root")
+);
+```
+
+### **Example**
+
+**`index.html`**
+
+```html
+<div id="root"></div>
+<div id="modal-root"></div>
+```
+
+Component:
+
+```jsx
+import { createPortal } from "react-dom";
+
+function Modal() {
+  return createPortal(
+    <div className="modal">
+      <h2>Hello Modal</h2>
+    </div>,
+    document.getElementById("modal-root")
+  );
+}
+```
+
+### **Types**
+
+1. Modal Portal
+2. Tooltip Portal
+3. Notification Portal
+4. Overlay Portal
+
+### **Important concept**
+
+A portal changes the **DOM location**, but the component remains part of the same **React tree**.
+
+Therefore, React context and event propagation still work according to the React tree.
+
+---
+
+# **15. React Suspense**
+
+### **Definition**
+
+**`Suspense`** allows React to display a fallback UI while some child content is not ready.
+
+Commonly used with:
+
+- Lazy-loaded components
+- Code splitting
+- Suspense-enabled data sources
+
+### **Syntax**
+
+```jsx
+<Suspense fallback={<Loading />}>
+  <Component />
+</Suspense>
+```
+
+### **Example — Lazy Loading**
+
+```jsx
+import { lazy, Suspense } from "react";
+
+const Dashboard = lazy(() => import("./Dashboard"));
+
+function App() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <Dashboard />
+    </Suspense>
+  );
+}
+```
+
+### **Types**
+
+1. Component lazy loading
+2. Code splitting
+3. Suspense boundaries
+4. Suspense-enabled data loading
+
+### **Nested Suspense**
+
+```jsx
+<Suspense fallback={<PageLoading />}>
+  <Header />
+
+  <Suspense fallback={<ContentLoading />}>
+    <Content />
+  </Suspense>
+</Suspense>
+```
+
+### **Important**
+
+**`Suspense`** is not simply an alternative to:
+
+```jsx
+isLoading ? <Loading /> : <Component />
+```
+
+It works with React features that can **suspend rendering**.
+
+---
+
+# **16. React CSS Styling**
+
+### **Definition**
+
+React supports multiple approaches to styling components.
+
+### **Types**
+
+1. Inline CSS
+2. External CSS
+3. CSS Modules
+4. CSS-in-JS
+5. Sass/SCSS
+6. Utility CSS frameworks
+
+---
+
+## **10.1 Inline CSS**
+
+### **Syntax**
+
+```jsx
+<div style={{ color: "red", fontSize: "20px" }}>
+  Hello
+</div>
+```
+
+### **Example**
+
+```jsx
+const style = {
+  color: "blue",
+  backgroundColor: "lightgray"
+};
+
+function App() {
+  return <h1 style={style}>Hello React</h1>;
+}
+```
+
+### **Important**
+
+CSS property names become camelCase:
+
+```css
+background-color
+```
+
+becomes:
+
+```jsx
+backgroundColor
+```
+
+### **Best for**
+
+- Dynamic styles
+- Small component-specific styles
+
+---
+
+# **React CSS Modules**
+
+### **Definition**
+
+CSS Modules scope CSS class names locally to a component.
+
+### **File**
+
+```
+Button.module.css
+```
+
+### **CSS**
+
+```css
+.button {
+  background: blue;
+  color: white;
+}
+```
+
+### **Component**
+
+```jsx
+import styles from "./Button.module.css";
+
+function Button() {
+  return (
+    <button className={styles.button}>
+      Click
+    </button>
+  );
+}
+```
+
+### **Types**
+
+1. Local classes
+2. Local animations
+3. Conditional classes
+4. Composed classes
+
+### **Conditional class**
+
+```jsx
+<div className={`${styles.card} ${active ? styles.active : ""}`}>
+```
+
+### **Advantage**
+
+Normal CSS:
+
+```css
+.button
+```
+
+can potentially conflict with another **`.button`**.
+
+CSS Modules generate scoped class names.
+
+---
+
+# **React CSS-in-JS**
+
+### **Definition**
+
+CSS-in-JS means writing CSS using JavaScript or JavaScript-based APIs.
+
+Popular approaches/libraries include:
+
+- styled-components
+- Emotion
+- other CSS-in-JS solutions
+
+### **Example concept**
+
+```jsx
+const Button = styled.button`
+  background: blue;
+  color: white;
+`;
+```
+
+### **Dynamic styling**
+
+```jsx
+const Button = styled.button`
+  background: ${(props) =>
+    props.primary ? "blue" : "gray"};
+`;
+```
+
+Usage:
+
+```jsx
+<Button primary>
+  Submit
+</Button>
+```
+
+### **Types**
+
+1. Styled components
+2. Dynamic styles
+3. Theme-based styling
+4. Component-scoped styling
+
+### **Advantages**
+
+- Dynamic styles
+- Component-level styling
+- Theme support
+
+### **Disadvantages**
+
+- Additional abstraction
+- Runtime/build considerations depending on library
+- Can increase complexity in large projects
+
+---
+
+# **17. React Router**
+
+### **Definition**
+
+React Router is used for **client-side routing** in React applications.
+
+It allows different URLs to render different components without a full page reload.
+
+### **Main concepts**
+
+- Router
+- Routes
+- Route
+- Link
+- Navigate
+- Nested routes
+- URL parameters
+- Query parameters
+- Layout routes
+- Protected routes
+
+### **Basic syntax**
+
+```jsx
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+```
+
+### **Navigation**
+
+```jsx
+import { Link } from "react-router-dom";
+
+<Link to="/about">
+  About
+</Link>
+```
+
+### **Dynamic route**
+
+```jsx
+<Route path="/users/:id" element={<User />} />
+```
+
+Access parameter:
+
+```jsx
+import { useParams } from "react-router-dom";
+
+function User() {
+  const { id } = useParams();
+
+  return <h1>User: {id}</h1>;
+}
+```
+
+### **Programmatic navigation**
+
+```jsx
+const navigate = useNavigate();
+
+navigate("/dashboard");
+```
+
+### **Nested routes**
+
+```jsx
+<Route path="/dashboard" element={<Dashboard />}>
+  <Route path="profile" element={<Profile />} />
+  <Route path="settings" element={<Settings />} />
+</Route>
+```
+
+### **Types**
+
+1. Static routes
+2. Dynamic routes
+3. Nested routes
+4. Layout routes
+5. Protected routes
+6. Error routes
+7. Catch-all routes
+
+### **Important**
+
+Understand these separately:
+
+```
+Link
+↓
+User navigation
+
+useNavigate()
+↓
+Programmatic navigation
+
+useParams()
+↓
+URL parameters
+
+useLocation()
+↓
+Current location
+
+Outlet
+↓
+Render child route
+```
+
+---
+
+This topic can refer to **React UI transitions** and the React **Transition APIs**.
+
+## **A. CSS Transitions**
+
+### **Example**
+
+```css
+.button {
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: blue;
+}
+```
+
+---
+
+## **B. `useTransition`**
+
+### **Definition**
+
+**`useTransition`** allows React to mark an update as **non-urgent**, so urgent UI updates can remain responsive.
+
+### **Syntax**
+
+```jsx
+const [isPending, startTransition] = useTransition();
+```
+
+### **Example**
+
+```jsx
+function Search() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+
+  const [isPending, startTransition] = useTransition();
+
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+
+    startTransition(() => {
+      setResults(searchData(e.target.value));
+    });
+  };
+
+  return (
+    <>
+      <input
+        value={query}
+        onChange={handleChange}
+      />
+
+      {isPending && <p>Updating...</p>}
+
+      <Results data={results} />
+    </>
+  );
+}
+```
+
+### **Types**
+
+1. Urgent update
+2. Transition/non-urgent update
+
+### **Important**
+
+**`useTransition`** is about **update priority**, not CSS animation.
+
+---
+
+## **C. `startTransition`**
+
+Can also be used directly:
+
+```jsx
+import { startTransition } from "react";
+
+startTransition(() => {
+  setState(value);
+});
+```
+
+---
+
+# **18. React Forward Ref**
+
+### **Definition**
+
+**`forwardRef`** historically allowed a parent component to pass a **`ref`** through a component to a child DOM element.
+
+### **Traditional syntax**
+
+```jsx
+const Input = forwardRef(function Input(props, ref) {
+  return (
+    <input ref={ref} {...props} />
+  );
+});
+```
+
+Parent:
+
+```jsx
+function App() {
+  const inputRef = useRef(null);
+
+  return (
+    <>
+      <Input ref={inputRef} />
+
+      <button onClick={() => inputRef.current.focus()}>
+        Focus
+      </button>
+    </>
+  );
+}
+```
+
+### **Types**
+
+1. DOM ref forwarding
+2. Component ref forwarding
+3. Ref + custom methods
+
+### **Important modern React note**
+
+In **React 19**, **`ref`** can be passed as a prop to function components, so **`forwardRef`** is no longer required for this common use case.
+
+Conceptually:
+
+```jsx
+function Input({ ref, ...props }) {
+  return <input ref={ref} {...props} />;
+}
+```
+
+For intermediate-level notes, know **both the traditional `forwardRef` pattern and the newer React approach**.
+
+---
+
+# **19. React HOC — Higher Order Component**
+
+### **Definition**
+
+A **Higher Order Component (HOC)** is a function that takes a component and returns an enhanced component.
+
+### **Basic formula**
+
+```
+HOC(Component) → EnhancedComponent
+```
+
+### **Syntax**
+
+```jsx
+function withAuth(Component) {
+  return function ProtectedComponent(props) {
+    if (!isLoggedIn) {
+      return <Login />;
+    }
+
+    return <Component {...props} />;
+  };
+}
+```
+
+Usage:
+
+```jsx
+const ProtectedDashboard = withAuth(Dashboard);
+```
+
+### **Example**
+
+```jsx
+function withLoading(Component) {
+  return function WithLoading({ loading, ...props }) {
+    if (loading) {
+      return <p>Loading...</p>;
+    }
+
+    return <Component {...props} />;
+  };
+}
+```
+
+Usage:
+
+```jsx
+const UserListWithLoading = withLoading(UserList);
+```
+
+### **Types**
+
+Common HOCs:
+
+1. Authentication HOC
+2. Authorization HOC
+3. Loading HOC
+4. Logging HOC
+5. Data-fetching HOC
+6. Feature/permission HOC
+
+### **Important rules**
+
+Don't mutate the original component:
+
+```jsx
+// Avoid
+Component.someProperty = ...
+```
+
+Instead:
+
+```jsx
+return function EnhancedComponent(props) {
+  return <Component {...props} />;
+};
+```
+
+### **HOC vs Custom Hook**
+
+| **HOC** | **Custom Hook** |
+| --- | --- |
+| Enhances component | Shares logic |
+| Returns component | Returns values/functions |
+| Component composition | Logic composition |
+| Older/common pattern | Preferred for many modern use cases |
+
+---
+
+# **20. React Sass**
+
+### **Definition**
+
+**Sass/SCSS** is a CSS preprocessor that provides features such as:
+
+- Variables
+- Nesting
+- Mixins
+- Functions
+- Partials
+- Operators
+
+React can use Sass by compiling **`.scss`** files.
+
+### **Installation**
+
+```bash
+npm install sass
+```
+
+### **File**
+
+```
+App.scss
+```
+
+### **SCSS**
+
+```scss
+$primary: blue;
+
+.button {
+  background: $primary;
+  color: white;
+
+  &:hover {
+    background: darkblue;
+  }
+}
+```
+
+### **React**
+
+```jsx
+import "./App.scss";
+
+function App() {
+  return (
+    <button className="button">
+      Submit
+    </button>
+  );
+}
+```
+
+### **Types**
+
+1. Variables
+2. Nesting
+3. Mixins
+4. Functions
+5. Partials
+6. Modules
+7. Operators
+
+### **Variables**
+
+```scss
+$primary-color: blue;
+
+.title {
+  color: $primary-color;
+}
+```
+
+### **Nesting**
+
+```scss
+.card {
+  padding: 20px;
+
+  .title {
+    font-size: 20px;
+  }
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+```
+
+### **Mixin**
+
+```scss
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  @include flex-center;
+}
+```
+
+### **Sass + CSS Modules**
+
+```
+Button.module.scss
+```
+
+```scss
+.button {
+  background: blue;
+}
+```
+
+```jsx
+import styles from "./Button.module.scss";
+
+<button className={styles.button}>
+  Click
+</button>
+```
+
+This is a very useful combination in React projects.
+
+---
+
+# **21. REACT HOOKS**
+
+Hooks are one of the most important areas for intermediate React.
+
+---
+
+# **i. What are Hooks?**
+
+### **Definition**
+
+**Hooks** are functions that allow functional components to use React features such as:
+
+- State
+- Effects
+- Context
+- Refs
+- Performance optimizations
+
+Hooks were introduced in React 16.8.
+
+### **Syntax**
+
+```jsx
+const [state, setState] = useState(initialValue);
+```
+
+### **Types of Hooks**
+
+### **Built-in Hooks**
+
+#### **State Hooks**
+
+```
+useState
+useReducer
+```
+
+#### **Context Hook**
+
+```
+useContext
+```
+
+#### **Ref Hooks**
+
+```
+useRef
+useImperativeHandle
+```
+
+#### **Effect Hooks**
+
+```
+useEffect
+useLayoutEffect
+useInsertionEffect
+```
+
+#### **Performance Hooks**
+
+```
+useMemo
+useCallback
+useTransition
+useDeferredValue
+```
+
+#### **Other Hooks**
+
+```
+useId
+useSyncExternalStore
+useDebugValue
+```
+
+### **Custom Hooks**
+
+Developer-created hooks:
+
+```jsx
+function useSomething() {
+  // logic
+}
+```
+
+---
+
+# **ii. React `useState`**
+
+### **Definition**
+
+**`useState`** adds state to a functional component.
+
+### **Syntax**
+
+```jsx
+const [state, setState] = useState(initialValue);
+```
+
+### **Example**
+
+```jsx
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <p>{count}</p>
+
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </>
+  );
+}
+```
+
+### **Types**
+
+State can contain:
+
+1. Primitive
+2. Object
+3. Array
+4. Boolean
+5. Function/lazy initial state
+
+### **Object state**
+
+```jsx
+const [user, setUser] = useState({
+  name: "",
+  age: 20
+});
+```
+
+Update:
+
+```jsx
+setUser(prev => ({
+  ...prev,
+  name: "John"
+}));
+```
+
+### **Array state**
+
+```jsx
+const [items, setItems] = useState([]);
+
+setItems(prev => [...prev, newItem]);
+```
+
+### **Functional update**
+
+Use when new state depends on previous state:
+
+```jsx
+setCount(prev => prev + 1);
+```
+
+### **Lazy initialization**
+
+```jsx
+const [data, setData] = useState(() => expensiveCalculation());
+```
+
+### **Important**
+
+Never mutate state directly:
+
+```jsx
+// Wrong
+user.name = "John";
+```
+
+Instead:
+
+```jsx
+setUser(prev => ({
+  ...prev,
+  name: "John"
+}));
+```
+
+---
+
+# **iii. React `useEffect`**
+
+### **Definition**
+
+**`useEffect`** allows a component to synchronize with **external systems** after rendering.
+
+Common uses:
+
+- API calls
+- Event listeners
+- Timers
+- Subscriptions
+- DOM APIs
+- Third-party libraries
+
+### **Syntax**
+
+```jsx
+useEffect(() => {
+  // effect
+
+  return () => {
+    // cleanup
+  };
+}, [dependencies]);
+```
+
+### **Example**
+
+```jsx
+function User() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/user")
+      .then(res => res.json())
+      .then(data => setUser(data));
+  }, []);
+
+  return <div>{user?.name}</div>;
+}
+```
+
+### **Dependency types**
+
+### **1. No dependency array**
+
+```jsx
+useEffect(() => {
+  console.log("after every render");
+});
+```
+
+Runs after every render.
+
+### **2. Empty dependency array**
+
+```jsx
+useEffect(() => {
+  console.log("effect");
+}, []);
+```
+
+Runs after initial mount.
+
+### **3. Dependency array**
+
+```jsx
+useEffect(() => {
+  console.log(userId);
+}, [userId]);
+```
+
+Runs when **`userId`** changes.
+
+### **Cleanup**
+
+```jsx
+useEffect(() => {
+  const id = setInterval(() => {
+    console.log("tick");
+  }, 1000);
+
+  return () => {
+    clearInterval(id);
+  };
+}, []);
+```
+
+### **Types**
+
+1. Data fetching
+2. Subscription
+3. Event listener
+4. Timer
+5. Synchronization
+6. Cleanup effect
+
+### **Important intermediate concept**
+
+Don't use **`useEffect`** just to calculate derived values.
+
+Avoid:
+
+```jsx
+const [fullName, setFullName] = useState("");
+
+useEffect(() => {
+  setFullName(firstName + " " + lastName);
+}, [firstName, lastName]);
+```
+
+Prefer:
+
+```jsx
+const fullName = `${firstName} ${lastName}`;
+```
+
+---
+
+# **iv. React `useContext`**
+
+### **Definition**
+
+**`useContext`** allows a component to read values from React Context without manually passing props through every level.
+
+Useful for:
+
+- Theme
+- Authentication
+- Language
+- User settings
+- Global-ish application state
+
+### **Syntax**
+
+Create context:
+
+```jsx
+const ThemeContext = createContext();
+```
+
+Provider:
+
+```jsx
+<ThemeContext value="dark">
+  <App />
+</ThemeContext>
+```
+
+Consume:
+
+```jsx
+const theme = useContext(ThemeContext);
+```
+
+### **Example**
+
+```jsx
+const ThemeContext = createContext("light");
+
+function App() {
+  return (
+    <ThemeContext value="dark">
+      <Page />
+    </ThemeContext>
+  );
+}
+
+function Page() {
+  const theme = useContext(ThemeContext);
+
+  return <div>Theme: {theme}</div>;
+}
+```
+
+### **Types**
+
+1. Theme Context
+2. Auth Context
+3. User Context
+4. Language Context
+5. Application settings
+
+### **Important**
+
+Context is not automatically a replacement for every state-management library.
+
+Use it mainly when many components need access to the same value.
+
+---
+
+# **v. React `useRef`**
+
+### **Definition**
+
+**`useRef`** stores a mutable value that persists across renders **without causing a re-render when changed**.
+
+### **Syntax**
+
+```jsx
+const ref = useRef(initialValue);
+```
+
+### **Type 1 — DOM reference**
+
+```jsx
+const inputRef = useRef(null);
+
+<input ref={inputRef} />
+```
+
+Then:
+
+```jsx
+inputRef.current.focus();
+```
+
+### **Example**
+
+```jsx
+function Input() {
+  const inputRef = useRef(null);
+
+  return (
+    <>
+      <input ref={inputRef} />
+
+      <button onClick={() => inputRef.current.focus()}>
+        Focus
+      </button>
+    </>
+  );
+}
+```
+
+### **Type 2 — Store mutable value**
+
+```jsx
+const countRef = useRef(0);
+
+countRef.current++;
+```
+
+### **Types**
+
+1. DOM reference
+2. Mutable value
+3. Previous value storage
+4. Timer/interval ID
+5. Third-party library instance
+
+### **Previous value example**
+
+```jsx
+const previousValue = useRef(value);
+
+useEffect(() => {
+  previousValue.current = value;
+}, [value]);
+```
+
+### **Important**
+
+Changing:
+
+```jsx
+ref.current
+```
+
+does **not** trigger a render.
+
+---
+
+# **vi. React `useReducer`**
+
+### **Definition**
+
+**`useReducer`** manages state using a **reducer function** and **actions**.
+
+Useful when state logic becomes complex.
+
+### **Syntax**
+
+```jsx
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+Reducer:
+
+```jsx
+function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1 };
+
+    default:
+      return state;
+  }
+}
+```
+
+### **Example**
+
+```jsx
+function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return {
+        count: state.count + 1
+      };
+
+    case "decrement":
+      return {
+        count: state.count - 1
+      };
+
+    case "reset":
+      return {
+        count: 0
+      };
+
+    default:
+      throw new Error("Unknown action");
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, {
+    count: 0
+  });
+
+  return (
+    <>
+      <p>{state.count}</p>
+
+      <button onClick={() => dispatch({ type: "increment" })}>
+        +
+      </button>
+
+      <button onClick={() => dispatch({ type: "decrement" })}>
+        -
+      </button>
+    </>
+  );
+}
+```
+
+### **Types**
+
+1. Simple reducer
+2. Object state reducer
+3. Multiple-action reducer
+4. Reducer + Context
+
+### **Reducer pattern**
+
+```
+UI
+ ↓
+dispatch(action)
+ ↓
+Reducer
+ ↓
+New State
+ ↓
+UI
+```
+
+### **Important**
+
+A reducer should be **pure**.
+
+Don't do API calls or mutate external state inside the reducer.
+
+---
+
+# **vii. React `useCallback`**
+
+### **Definition**
+
+**`useCallback`** memoizes a **function reference** between renders.
+
+### **Syntax**
+
+```jsx
+const memoizedFunction = useCallback(
+  () => {
+    // logic
+  },
+  [dependencies]
+);
+```
+
+### **Example**
+
+```jsx
+const handleClick = useCallback(() => {
+  console.log("Clicked");
+}, []);
+```
+
+### **Practical example**
+
+```jsx
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  const handleClick = useCallback(() => {
+    console.log("Hello");
+  }, []);
+
+  return (
+    <>
+      <button onClick={() => setCount(count + 1)}>
+        {count}
+      </button>
+
+      <Child onClick={handleClick} />
+    </>
+  );
+}
+```
+
+If **`Child`** is memoized:
+
+```jsx
+const Child = memo(function Child({ onClick }) {
+  return <button onClick={onClick}>Child</button>;
+});
+```
+
+**`useCallback`** can help maintain the same function reference.
+
+### **Types**
+
+1. Stable callback
+2. Callback passed to memoized child
+3. Callback used in dependency arrays
+4. Event handler optimization
+
+### **Important**
+
+Don't use **`useCallback`** everywhere.
+
+It is a **performance optimization**, not something required for normal event handlers.
+
+---
+
+# **viii. React `useMemo`**
+
+### **Definition**
+
+**`useMemo`** memoizes the **result of a calculation**.
+
+### **Syntax**
+
+```jsx
+const result = useMemo(
+  () => expensiveCalculation(data),
+  [data]
+);
+```
+
+### **Example**
+
+```jsx
+function ProductList({ products, search }) {
+  const filteredProducts = useMemo(() => {
+    return products.filter(product =>
+      product.name
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+  }, [products, search]);
+
+  return (
+    <ul>
+      {filteredProducts.map(product => (
+        <li key={product.id}>
+          {product.name}
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+### **Types**
+
+1. Expensive calculation
+2. Derived data
+3. Stable object reference
+4. Stable array reference
+
+### **`useMemo` vs `useCallback`**
+
+| **`useMemo`** | **`useCallback`** |
+| --- | --- |
+| Memoizes a value | Memoizes a function |
+| Returns calculated result | Returns function |
+| **`useMemo(() => value, [])`** | **`useCallback(fn, [])`** |
+
+Conceptually:
+
+```jsx
+useCallback(fn, deps)
+```
+
+is similar to:
+
+```jsx
+useMemo(() => fn, deps)
+```
+
+### **Important**
+
+Don't memoize everything. Measure/understand the performance problem first.
+
+---
+
+# **ix. React Custom Hooks**
+
+### **Definition**
+
+A **Custom Hook** is a JavaScript function whose name starts with **`use`** and which can use other Hooks.
+
+It is used to **reuse stateful logic**, not UI.
+
+### **Syntax**
+
+```jsx
+function useSomething() {
+  // hooks
+  return value;
+}
+```
+
+### **Example — `useCounter`**
+
+```jsx
+function useCounter(initialValue = 0) {
+  const [count, setCount] = useState(initialValue);
+
+  const increment = () => {
+    setCount(prev => prev + 1);
+  };
+
+  const decrement = () => {
+    setCount(prev => prev - 1);
+  };
+
+  return {
+    count,
+    increment,
+    decrement
+  };
+}
+```
+
+Use it:
+
+```jsx
+function Counter() {
+  const {
+    count,
+    increment,
+    decrement
+  } = useCounter(10);
+
+  return (
+    <>
+      <p>{count}</p>
+
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
+    </>
+  );
+}
+```
+
+### **Types**
+
+Common custom hooks:
+
+1. **`useFetch`**
+2. **`useForm`**
+3. **`useLocalStorage`**
+4. **`useDebounce`**
+5. **`useToggle`**
+6. **`usePrevious`**
+7. **`useOnlineStatus`**
+8. **`useWindowSize`**
+9. **`useClickOutside`**
+
+### **Example — `useToggle`**
+
+```jsx
+function useToggle(initialValue = false) {
+  const [value, setValue] = useState(initialValue);
+
+  const toggle = () => {
+    setValue(prev => !prev);
+  };
+
+  return [value, toggle];
+}
+```
+
+Usage:
+
+```jsx
+const [isOpen, toggleOpen] = useToggle();
+
+<button onClick={toggleOpen}>
+  Toggle
+</button>
+```
+
+### **Important distinction**
+
+Custom Hooks reuse:
+
+> **logic**
+> 
+
+They do not reuse the actual component UI.
+
+---
+
+# **React Hooks — Quick Classification**
+
+This is worth memorizing for interviews and practical development:
+
+| **Hook** | **Main Purpose** | **Category** |
+| --- | --- | --- |
+| **`useState`** | Local state | State |
+| **`useReducer`** | Complex state | State |
+| **`useEffect`** | External synchronization | Effect |
+| **`useContext`** | Consume context | Context |
+| **`useRef`** | Persistent mutable value / DOM | Ref |
+| **`useMemo`** | Memoize value | Performance |
+| **`useCallback`** | Memoize function | Performance |
+| **`useTransition`** | Non-urgent updates | Performance/Concurrency |
+| **`useDeferredValue`** | Defer a value | Performance/Concurrency |
+| **`useId`** | Stable unique IDs | Utility |
+| Custom Hook | Reuse logic | Custom |
+
+---
