@@ -607,3 +607,841 @@ Proper configuration is essential; these capabilities do not automatically guara
 | `$locf` | Fills missing values with the last observed value. | `{$setWindowFields:{sortBy:{date:1},output:{value:{$locf:"$value"}}}}` |
 | `$geoNear` | Finds nearby geospatial documents and calculates distances. | `{$geoNear:{near:{type:"Point",coordinates:[73.8567,18.5204]},distanceField:"distance",spherical:true}}` |
 | `$documents` | Supplies literal documents to a pipeline in supported contexts. | `{$documents:[{x:1},{x:2}]}` |
+
+#### 3.8 Complete aggregation examples
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| Department count | Counts students in each department. | `db.students.aggregate([{$group:{_id:"$department",count:{$sum:1}}}])` |
+| Average marks | Calculates department-wise average marks. | `db.students.aggregate([{$group:{_id:"$department",avg:{$avg:"$marks"}}},{$sort:{avg:-1}}])` |
+| Top 5 students | Returns the five highest-scoring students. | `db.students.aggregate([{$sort:{marks:-1}},{$limit:5}])` |
+| Skills frequency | Counts the occurrences of each skill. | `db.students.aggregate([{$unwind:"$skills"},{$group:{_id:"$skills",count:{$sum:1}}},{$sort:{count:-1}}])` |
+| Join collections | Joins students with their courses. | `db.students.aggregate([{$lookup:{from:"courses",localField:"courseId",foreignField:"_id",as:"course"}}])` |
+| Multiple analytics | Calculates department counts and average marks in one result. | `db.students.aggregate([{$facet:{departments:[{$group:{_id:"$department",count:{$sum:1}}}],marks:[{$group:{_id:null,avg:{$avg:"$marks"}}}]}}])` |
+| Save results | Writes computed totals to a collection. | `db.students.aggregate([{$group:{_id:"$department",count:{$sum:1}}},{$merge:"departmentTotals"}])` |
+
+### Category 4: Indexing and performance
+
+#### 4.1 Index commands
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `createIndex()` | Creates an index on a field. | `db.students.createIndex({name:1})` |
+| Ascending index | Indexes values in ascending order. | `db.students.createIndex({age:1})` |
+| Descending index | Indexes values in descending order. | `db.students.createIndex({marks:-1})` |
+| Compound index | Indexes multiple fields. | `db.students.createIndex({department:1,marks:-1})` |
+| Unique index | Prevents duplicate indexed values. | `db.students.createIndex({email:1},{unique:true})` |
+| Sparse index | Includes documents containing the indexed field. | `db.students.createIndex({phone:1},{sparse:true})` |
+| Partial index | Indexes only documents satisfying a filter. | `db.students.createIndex({email:1},{partialFilterExpression:{active:true}})` |
+| TTL index | Automatically expires eligible documents after a specified duration. | `db.sessions.createIndex({createdAt:1},{expireAfterSeconds:3600})` |
+| Text index | Supports text search. | `db.articles.createIndex({title:"text",body:"text"})` |
+| Wildcard index | Indexes fields across flexible document structures. | `db.products.createIndex({"$**":1})` |
+| Hashed index | Creates a hashed index, useful for certain shard keys. | `db.students.createIndex({studentId:"hashed"})` |
+| Geospatial index | Creates a spherical geospatial index. | `db.places.createIndex({location:"2dsphere"})` |
+| `getIndexes()` | Lists indexes on a collection. | `db.students.getIndexes()` |
+| `dropIndex()` | Removes a specified index. | `db.students.dropIndex("name_1")` |
+| `dropIndexes()` | Removes eligible secondary indexes. | `db.students.dropIndexes()` |
+| `reIndex()` | Historical index maintenance method; availability varies by version. | Check your server version's documentation before use. |
+
+#### 4.2 Query performance
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `explain("queryPlanner")` | Shows the planned query execution strategy. | `db.students.find({email:"a@b.com"}).explain("queryPlanner")` |
+| `explain("executionStats")` | Shows actual execution statistics. | `db.students.find({age:21}).explain("executionStats")` |
+| `hint()` | Specifies an index to use. | `db.students.find({age:21}).hint({age:1})` |
+| `limit()` | Reduces the number of returned documents. | `db.students.find().limit(10)` |
+| `projection` | Returns only necessary fields, reducing unnecessary data transfer. | `db.students.find({}, {name:1,_id:0})` |
+| `sort()` | Orders query results. | `db.students.find({department:"IT"}).sort({marks:-1})` |
+| `collation` | Defines language-aware string comparison behavior. | `db.students.find({name:"amit"}).collation({locale:"en",strength:2})` |
+| `allowDiskUse` | Allows eligible aggregation stages to use temporary disk space. | `db.students.aggregate([{$sort:{marks:-1}}],{allowDiskUse:true})` |
+| `maxTimeMS` | Sets a maximum execution time for supported operations. | `db.students.find({age:21}).maxTimeMS(2000)` |
+| `getIndexes()` | Helps identify available indexes before optimizing queries. | `db.students.getIndexes()` |
+| `db.serverStatus()` | Inspects server performance statistics. | `db.serverStatus()` |
+| `db.currentOp()` | Inspects currently running operations. | `db.currentOp()` |
+
+#### 4.3 Common index options
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `unique` | Enforces uniqueness of indexed keys. | `db.students.createIndex({email:1},{unique:true})` |
+| `sparse` | Excludes documents missing the indexed field. | `db.students.createIndex({phone:1},{sparse:true})` |
+| `expireAfterSeconds` | Sets the TTL expiration interval. | `db.sessions.createIndex({createdAt:1},{expireAfterSeconds:3600})` |
+| `partialFilterExpression` | Limits the index to documents matching a filter. | `db.students.createIndex({email:1},{partialFilterExpression:{active:true}})` |
+| `name` | Assigns a custom index name. | `db.students.createIndex({email:1},{name:"email_lookup"})` |
+| `collation` | Defines string comparison rules for the index. | `db.students.createIndex({name:1},{collation:{locale:"en",strength:2}})` |
+
+### Category 5: Production and administration
+
+#### 5.1 Validation and schema rules
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `validator` | Defines rules for documents in a collection. | `db.createCollection("employees",{validator:{$jsonSchema:{bsonType:"object",required:["name"],properties:{name:{bsonType:"string"}}}}})` |
+| `$jsonSchema` | Specifies required fields and BSON types. | `{$jsonSchema:{required:["email"],properties:{email:{bsonType:"string"}}}}` |
+| `collMod` | Modifies collection options such as validators. | `db.runCommand({collMod:"students",validator:{age:{$gte:0}}})` |
+| `validationLevel:"strict"` | Applies validation to inserts and updates. | `db.runCommand({collMod:"students",validationLevel:"strict"})` |
+| `validationLevel:"moderate"` | Applies validation to new documents and updates of already-valid documents. | `db.runCommand({collMod:"students",validationLevel:"moderate"})` |
+| `validationAction:"error"` | Rejects writes that violate validation rules. | `db.runCommand({collMod:"students",validationAction:"error"})` |
+| `validationAction:"warn"` | Logs validation failures instead of rejecting writes. | `db.runCommand({collMod:"students",validationAction:"warn"})` |
+| `bypassDocumentValidation` | Bypasses validation for an authorized write when supported. | `db.students.insertOne({age:"unknown"},{bypassDocumentValidation:true})` |
+| `validate` | Checks collection consistency. | `db.runCommand({validate:"students"})` |
+
+#### 5.2 User and role administration
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `db.createUser()` | Creates a user and assigns roles. | `db.createUser({user:"appUser",pwd:passwordPrompt(),roles:[{role:"readWrite",db:"college"}]})` |
+| `db.getUser()` | Retrieves one user's information. | `db.getUser("appUser")` |
+| `db.getUsers()` | Lists users in the current authentication database. | `db.getUsers()` |
+| `db.updateUser()` | Updates a user's roles or settings. | `db.updateUser("appUser",{roles:[{role:"read",db:"college"}]})` |
+| `db.changeUserPassword()` | Changes a user's password. | `db.changeUserPassword("appUser",passwordPrompt())` |
+| `db.dropUser()` | Removes a user. | `db.dropUser("appUser")` |
+| `db.dropAllUsers()` | Removes all users from the current authentication database. | `db.dropAllUsers()` |
+| `db.grantRolesToUser()` | Grants roles to a user. | `db.grantRolesToUser("appUser",[{role:"read",db:"college"}])` |
+| `db.revokeRolesFromUser()` | Revokes roles from a user. | `db.revokeRolesFromUser("appUser",[{role:"read",db:"college"}])` |
+| `db.createRole()` | Creates a custom role with specified privileges. | `db.createRole({role:"studentReader",privileges:[{resource:{db:"college",collection:"students"},actions:["find"]}],roles:[]})` |
+| `db.getRole()` | Retrieves information about a role. | `db.getRole("readWrite",{showPrivileges:true})` |
+| `db.getRoles()` | Lists roles in the current database. | `db.getRoles()` |
+| `db.updateRole()` | Updates a custom role's privileges or inherited roles. | `db.updateRole("studentReader",{roles:[]})` |
+| `db.dropRole()` | Removes a custom role. | `db.dropRole("studentReader")` |
+| `db.grantPrivilegesToRole()` | Grants additional privileges. | `db.grantPrivilegesToRole("studentReader",[{resource:{db:"college",collection:"students"},actions:["find"]}])` |
+| `db.revokePrivilegesFromRole()` | Revokes privileges from a role. | `db.revokePrivilegesFromRole("studentReader",[{resource:{db:"college",collection:"students"},actions:["find"]}])` |
+| `db.grantRolesToRole()` | Grants inherited roles to a role. | `db.grantRolesToRole("studentReader",[{role:"read",db:"college"}])` |
+| `db.revokeRolesFromRole()` | Removes inherited roles from a role. | `db.revokeRolesFromRole("studentReader",[{role:"read",db:"college"}])` |
+
+#### 5.3 Sessions and transactions
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `startSession()` | Starts a client session. | `const session=db.getMongo().startSession()` |
+| `startTransaction()` | Starts a transaction. | `session.startTransaction()` |
+| `commitTransaction()` | Commits transaction changes. | `session.commitTransaction()` |
+| `abortTransaction()` | Cancels the transaction. | `session.abortTransaction()` |
+| `endSession()` | Ends the session. | `session.endSession()` |
+| `getDatabase()` | Retrieves a database handle associated with the session. | `const collegeDB=session.getDatabase("college")` |
+| `withTransaction()` | Executes a callback within a transaction, with transaction handling. | `session.withTransaction(()=>{collegeDB.students.updateOne({name:"Amit"},{$inc:{marks:1}})})` |
+
+Transactions require a supported deployment, generally a replica set or sharded cluster. Run the operations through session-associated handles and handle errors by aborting the transaction and ending the session.
+
+#### 5.4 Server administration and diagnostics
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `db.adminCommand({ping:1})` | Checks server responsiveness. | `db.adminCommand({ping:1})` |
+| `db.adminCommand({hello:1})` | Reports server role and topology information. | `db.adminCommand({hello:1})` |
+| `db.adminCommand({buildInfo:1})` | Displays MongoDB build information. | `db.adminCommand({buildInfo:1})` |
+| `db.adminCommand({serverStatus:1})` | Reports operational server statistics. | `db.adminCommand({serverStatus:1})` |
+| `db.adminCommand({currentOp:1})` | Reports active operations, subject to permissions. | `db.adminCommand({currentOp:1})` |
+| `db.adminCommand({listDatabases:1})` | Lists databases. | `db.adminCommand({listDatabases:1})` |
+| `db.adminCommand({listCommands:1})` | Lists available server commands. | `db.adminCommand({listCommands:1})` |
+| `db.adminCommand({getCmdLineOpts:1})` | Displays parsed server configuration options. | `db.adminCommand({getCmdLineOpts:1})` |
+| `db.adminCommand({hostInfo:1})` | Reports host and operating-system information. | `db.adminCommand({hostInfo:1})` |
+| `db.adminCommand({connPoolStats:1})` | Reports connection pool statistics. | `db.adminCommand({connPoolStats:1})` |
+| `db.adminCommand({getLog:"global"})` | Retrieves global server log entries where supported. | `db.adminCommand({getLog:"global"})` |
+| `db.adminCommand({logRotate:1})` | Requests log rotation where supported. | `db.adminCommand({logRotate:1})` |
+| `db.runCommand({dbStats:1})` | Reports database statistics. | `db.runCommand({dbStats:1})` |
+| `db.runCommand({collStats:"students"})` | Reports collection statistics. | `db.runCommand({collStats:"students"})` |
+| `db.runCommand({profile:0})` | Disables database profiling. | `db.runCommand({profile:0})` |
+| `db.runCommand({profile:1,slowms:100})` | Profiles slow operations using the configured threshold. | `db.runCommand({profile:1,slowms:100})` |
+| `db.runCommand({profile:2})` | Profiles all operations; use cautiously because of overhead and sensitive log data. | `db.runCommand({profile:2})` |
+| `db.adminCommand({shutdown:1})` | Shuts down the server through an appropriate administrative connection. | `db.adminCommand({shutdown:1})` |
+
+These commands may require administrative permissions, and some are restricted by MongoDB version or deployment type. Avoid running shutdown or profiling commands on production without understanding their impact.
+
+#### 5.5 Replication commands
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `rs.initiate()` | Initializes a replica set. | `rs.initiate()` |
+| `rs.status()` | Displays replica set status. | `rs.status()` |
+| `rs.conf()` | Displays replica set configuration. | `rs.conf()` |
+| `rs.reconfig()` | Changes replica set configuration. | `rs.reconfig(rs.conf())` |
+| `rs.add()` | Adds a member to the replica set. | `rs.add("mongo2.example.net:27017")` |
+| `rs.remove()` | Removes a replica set member. | `rs.remove("mongo2.example.net:27017")` |
+| `rs.stepDown()` | Requests that the primary step down. | `rs.stepDown(60)` |
+| `rs.freeze()` | Prevents a member from seeking election temporarily, where supported. | `rs.freeze(60)` |
+| `rs.printReplicationInfo()` | Displays replication log information. | `rs.printReplicationInfo()` |
+| `rs.printSecondaryReplicationInfo()` | Displays secondary replication information. | `rs.printSecondaryReplicationInfo()` |
+| `replSetGetStatus` | Returns replica set status through the command interface. | `db.adminCommand({replSetGetStatus:1})` |
+| `replSetGetConfig` | Retrieves replica set configuration. | `db.adminCommand({replSetGetConfig:1})` |
+| `replSetGetRBID` | Retrieves a replica set rollback identifier. | `db.adminCommand({replSetGetRBID:1})` |
+
+These commands are for configured replica sets. Reconfiguration and election-related operations can affect availability, so use them carefully in production.
+
+#### 5.6 Sharding commands
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `sh.status()` | Displays sharding configuration and status. | `sh.status()` |
+| `sh.enableSharding()` | Enables sharding for a database where applicable. | `sh.enableSharding("college")` |
+| `sh.shardCollection()` | Shards a collection using a shard key. | `sh.shardCollection("college.students",{studentId:1})` |
+| `sh.addShard()` | Adds a shard to a cluster. | `sh.addShard("rsShard2/mongo2:27017,mongo3:27017")` |
+| `sh.removeShard()` | Begins removing a shard from a cluster. | `sh.removeShard("shard02")` |
+| `sh.splitAt()` | Splits a chunk at a specified shard-key value where supported. | `sh.splitAt("college.students",{studentId:1000})` |
+| `sh.splitFind()` | Finds and splits a chunk based on a shard-key query where supported. | `sh.splitFind("college.students",{studentId:1000})` |
+| `sh.moveChunk()` | Moves a chunk between shards where supported. | `sh.moveChunk("college.students",{studentId:1000},"shard02")` |
+| `sh.disableBalancing()` | Disables balancing for a collection where supported. | `sh.disableBalancing("college.students")` |
+| `sh.enableBalancing()` | Enables balancing for a collection where supported. | `sh.enableBalancing("college.students")` |
+| `listShards` | Lists shards in the cluster. | `db.adminCommand({listShards:1})` |
+
+#### 5.7 Geospatial commands
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `$near` | Finds nearby documents, sorted by distance. | `db.places.find({location:{$near:{$geometry:{type:"Point",coordinates:[73.8567,18.5204]}}}})` |
+| `$nearSphere` | Finds nearby documents using spherical geometry. | `db.places.find({location:{$nearSphere:{$geometry:{type:"Point",coordinates:[73.8567,18.5204]}}}})` |
+| `$geoWithin` | Finds geometries inside a specified region. | `db.places.find({location:{$geoWithin:{$geometry:{type:"Polygon",coordinates:[[[73,18],[74,18],[74,19],[73,19],[73,18]]]}}}})` |
+| `$geoIntersects` | Finds geometries intersecting a specified geometry. | `db.places.find({location:{$geoIntersects:{$geometry:{type:"Polygon",coordinates:[[[73,18],[74,18],[74,19],[73,19],[73,18]]]}}}})` |
+| `$centerSphere` | Defines a spherical region for supported legacy coordinate queries. | `db.places.find({coordinates:{$geoWithin:{$centerSphere:[[73.8567,18.5204],0.01]}}})` |
+| `$geoNear` | Aggregation stage that calculates distances and returns nearby documents. | `db.places.aggregate([{$geoNear:{near:{type:"Point",coordinates:[73.8567,18.5204]},distanceField:"distance",spherical:true}}])` |
+
+GeoJSON coordinates are specified as `[longitude, latitude]`. Geospatial queries require appropriate indexes and compatible location data.
+
+#### 5.8 Special collections and change streams
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| Capped collection | Creates a fixed-size collection that reuses storage as records are added. | `db.createCollection("logs",{capped:true,size:100000})` |
+| Time-series collection | Creates a collection optimized for time-stamped measurements. | `db.createCollection("measurements",{timeseries:{timeField:"timestamp",metaField:"sensor"}})` |
+| `db.students.watch()` | Monitors changes in a collection. | `db.students.watch()` |
+| `db.watch()` | Monitors changes across collections in a database. | `db.watch()` |
+| `db.getMongo().watch()` | Monitors changes across databases on a supported client. | `db.getMongo().watch()` |
+| `fullDocument:"updateLookup"` | Requests the current majority-committed document after an update. | `db.students.watch([],{fullDocument:"updateLookup"})` |
+| `resumeAfter` | Resumes a change stream from a saved resume token. | `db.students.watch([],{resumeAfter:savedToken})` |
+| `startAfter` | Starts a change stream after a saved token, including certain invalidation scenarios. | `db.students.watch([],{startAfter:savedToken})` |
+
+Change streams require a replica set or sharded cluster. `savedToken` represents a valid resume token obtained from a previous change event.
+
+#### 5.9 Backup, restore, import, and export
+
+These are command-line utilities, so run them in your operating-system terminal rather than inside `mongosh`.
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `mongodump` | Backs up MongoDB data to BSON files. | `mongodump --db college --out ./backup` |
+| `mongorestore` | Restores BSON backup files. | `mongorestore --db college ./backup/college` |
+| `mongoexport` | Exports collection data to JSON or CSV. | `mongoexport --db college --collection students --out students.json` |
+| `mongoimport` | Imports JSON or CSV data. | `mongoimport --db college --collection students --file students.json` |
+| `mongodump --archive` | Creates a single archive backup. | `mongodump --db college --archive=college.archive` |
+| `mongorestore --archive` | Restores an archive backup. | `mongorestore --archive=college.archive` |
+| `mongodump --gzip` | Compresses backup output. | `mongodump --db college --gzip --out ./backup` |
+| `mongorestore --gzip` | Restores compressed backup files. | `mongorestore --gzip ./backup` |
+| `mongoexport --type=csv` | Exports selected fields to CSV. | `mongoexport --db college --collection students --type=csv --fields name,age,marks --out students.csv` |
+| `mongoimport --type=csv` | Imports CSV using the header row. | `mongoimport --db college --collection students --type=csv --headerline --file students.csv` |
+
+#### 5.10 MongoDB Shell utilities and BSON types
+
+| Command | Explain | Example |
+| --- | --- | --- |
+| `help` | Displays shell help. | `help` |
+| `show users` | Lists users in the current database, subject to permissions. | `show users` |
+| `show roles` | Lists roles in the current database. | `show roles` |
+| `exit` | Exits the shell. | `exit` |
+| `ObjectId()` | Creates an ObjectId. | `ObjectId()` |
+| `new Date()` | Creates a JavaScript date. | `new Date()` |
+| `ISODate()` | Creates a date from an ISO-formatted string in supported shell usage. | `ISODate("2026-10-15T10:00:00Z")` |
+| `UUID()` | Creates a UUID value. | `UUID()` |
+| `NumberInt()` | Creates a BSON 32-bit integer. | `NumberInt(25)` |
+| `NumberLong()` | Creates a BSON 64-bit integer. | `NumberLong("9000000000")` |
+| `Decimal128()` | Creates a BSON Decimal128 value. | `Decimal128("99.95")` |
+| `BinData()` | Constructs binary data in supported shell usage. | `BinData(0,"SGVsbG8=")` |
+
+## **How MongoDB connects with Python, Java, Rust, and other backend and AI languages**
+
+MongoDB can connect to almost any programming language through a **MongoDB driver** or an official library. The driver lets your application communicate with the MongoDB database server, store documents, query data, update records, and delete records.
+
+The main concept is the same for Python, Java, Rust, JavaScript, Go, C#, and AI applications. What changes is the library and the code used to connect.
+
+### **1. How MongoDB connection works**
+
+**Your application**
+
+Python · Java · Rust · Node.js · AI backend
+
+**MongoDB driver / library**
+
+Connects to the server and sends database operations
+
+**MongoDB**
+
+Database → Collections → Documents
+
+For example, suppose you are building an AI chatbot. Python handles the AI logic, FastAPI provides the backend API, and MongoDB stores users, conversations, and chat history.
+
+- **Programming language:** Python
+- **Backend framework:** FastAPI
+- **Database driver:** PyMongo
+- **Database:** MongoDB
+- **AI library:** LangChain, LlamaIndex, or your chosen model SDK, if needed
+
+These are separate components that work together.
+
+### **2. First, get your MongoDB connection string**
+
+You can use either MongoDB Atlas (cloud) or MongoDB Community Server (local).
+
+**Option A: MongoDB Atlas (cloud)**
+
+- Create a cluster in MongoDB Atlas .
+- Create a database user.
+- Allow your application's IP address in network access settings.
+- Click **Connect → Drivers** and select your language.
+
+Best for deployed apps, APIs, and AI projects.
+
+**Option B: Local MongoDB**
+
+Install MongoDB Community Server and start the database service.
+
+text
+
+```
+mongodb://localhost:27017
+```
+
+Good for learning and local development.
+
+An Atlas connection string usually looks like this:
+
+text
+
+```
+mongodb+srv://<username>:<password>@<cluster-host>/<database>
+```
+
+Replace the placeholders with your actual credentials and cluster details. Keep credentials in environment variables, not directly in source code.
+
+### **3. Language-by-language setup, libraries, and code**
+
+The following examples use the same collection and operation so you can compare how each language connects. Each example connects to MongoDB, inserts a document, and reads it back.
+
+#### **A. Python — for backend development and AI**
+
+Common uses: FastAPI, Django, machine learning, RAG, AI agents
+
+**Required libraries**
+
+- **`pymongo`** — official MongoDB Python driver.
+- **`python-dotenv`** — optional, to load environment variables from a **`.env`** file.
+- **`fastapi`** and **`uvicorn`** — optional, to expose a backend API.
+- **`langchain-mongodb`** or **`llama-index`** integrations — optional, for AI retrieval workflows.
+
+**Step 1: Install**
+
+bash
+
+```
+pip install pymongo
+```
+
+Optional backend packages:
+
+bash
+
+```
+pip install fastapi uvicorn python-dotenv
+```
+
+**Step 2: Set the connection string**
+
+bash
+
+```
+# Linux/macOS
+export MONGODB_URI="mongodb://localhost:27017"
+```
+
+For Windows PowerShell:
+
+powershell
+
+```
+$env:MONGODB_URI="mongodb://localhost:27017"
+```
+
+For Atlas, use your Atlas connection string instead.
+
+**Step 3: Connect and perform CRUD operations**
+
+Save as **`app.py`**:
+
+python
+
+```
+import osfrom pymongoimport MongoClientclient= MongoClient(os.environ["MONGODB_URI"])db= client["myapp"]users= db["users"]# Createusers.insert_one({"name":"Alice","role":"developer"})# Readuser= users.find_one({"name":"Alice"})print(user)# Updateusers.update_one(    {"name":"Alice"},    {"$set": {"role":"AI engineer"}})# Deleteusers.delete_one({"name":"Alice"})client.close()
+```
+
+**Step 4: Run**
+
+bash
+
+```
+python app.py
+```
+
+#### **B. Java — for enterprise backends**
+
+Common uses: Spring Boot, enterprise APIs, microservices
+
+**Required libraries**
+
+- **`org.mongodb:mongodb-driver-sync`** — official synchronous Java driver.
+- **`org.springframework.boot:spring-boot-starter-data-mongodb`** — alternative if you use Spring Boot.
+
+**Step 1: Add the driver using Maven**
+
+Add this dependency inside your **`pom.xml`**:
+
+xml
+
+```
+<dependency>
+    <groupId>org.mongodb</groupId>
+    <artifactId>mongodb-driver-sync</artifactId>
+    <version>5.5.1</version>
+</dependency>
+```
+
+Use a currently supported driver version compatible with your Java runtime; if your project already uses a managed dependency version, follow its dependency management.
+
+**Step 2: Connect and write data**
+
+java
+
+```
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+
+public class Main {
+    public static void main(String[] args) {
+        String uri = System.getenv("MONGODB_URI");
+
+        try (MongoClient client = MongoClients.create(uri)) {
+            MongoDatabase db = client.getDatabase("myapp");
+            MongoCollection<Document> users =
+                db.getCollection("users");
+
+            users.insertOne(
+                new Document("name", "Alice")
+                    .append("role", "developer")
+            );
+
+            Document user = users.find(
+                new Document("name", "Alice")
+            ).first();
+
+            System.out.println(user);
+        }
+    }
+}
+```
+
+**Step 3:** Set **`MONGODB_URI`** in your environment and run the Java class from your IDE or Maven project.
+
+#### **C. Rust — for high-performance services**
+
+Common uses: high-throughput APIs, infrastructure, concurrent services
+
+**Required libraries**
+
+- **`mongodb`** — official Rust driver.
+- **`tokio`** — asynchronous runtime.
+- **`serde`** and **`serde_derive`** — optional helpers for serializing Rust data structures.
+
+**Step 1: Create a project**
+
+bash
+
+```
+cargo new mongo_demo
+cd mongo_demo
+```
+
+**Step 2: Add dependencies to `Cargo.toml`**
+
+toml
+
+```
+[dependencies]
+mongodb = "3"
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+```
+
+Cargo resolves a compatible release within the selected major version. Check the official driver guide for the latest version and supported Rust toolchain.
+
+**Step 3: Connect and insert a document**
+
+Put this in **`src/main.rs`**:
+
+rust
+
+```
+use mongodb::{
+    bson::doc,
+    Client,
+};
+
+#[tokio::main]
+async fn main() -> mongodb::error::Result<()> {
+    let uri = std::env::var("MONGODB_URI")
+        .expect("Set MONGODB_URI");
+
+    let client = Client::with_uri_str(uri).await?;
+
+    let db = client.database("myapp");
+    let users = db.collection::<mongodb::bson::Document>(
+        "users"
+    );
+
+    users.insert_one(doc! {
+        "name": "Alice",
+        "role": "developer"
+    }).await?;
+
+    let user = users.find_one(
+        doc! { "name": "Alice" }
+    ).await?;
+
+    println!("{:?}", user);
+
+    Ok(())
+}
+```
+
+**Step 4: Run**
+
+bash
+
+```
+cargo run
+```
+
+#### **D. JavaScript / Node.js — for web APIs and full-stack apps**
+
+Common uses: Express, NestJS, MERN stack, real-time applications
+
+**Required libraries**
+
+- **`mongodb`** — official Node.js driver.
+- **`express`** — optional HTTP backend framework.
+- **`mongoose`** — optional object-document mapper (ODM) with schemas and models.
+
+**Step 1: Install**
+
+bash
+
+```
+mkdir mongo-node
+cd mongo-node
+npm init -y
+npm install mongodb
+```
+
+**Step 2: Connect**
+
+Save as **`app.js`**:
+
+javascript
+
+```
+const {MongoClient }=require("mongodb");asyncfunctionmain() {consturi= process.env.MONGODB_URI;constclient=newMongoClient(uri);try {await client.connect();constdb= client.db("myapp");constusers= db.collection("users");await users.insertOne({      name:"Alice",      role:"developer"    });constuser=await users.findOne({      name:"Alice"    });    console.log(user);  }finally {await client.close();  }}main().catch(console.error);
+```
+
+**Step 3: Run**
+
+bash
+
+```
+node app.js
+```
+
+#### **E. Go — for cloud-native backend services**
+
+Common uses: cloud services, concurrent APIs, microservices
+
+**Required libraries**
+
+- **`go.mongodb.org/mongo-driver/v2/mongo`** — official Go driver.
+- **`context`** — Go standard library for deadlines and cancellation.
+
+**Step 1: Initialize and install**
+
+bash
+
+```
+mkdir mongo-go
+cd mongo-go
+go mod init mongo-go
+go get go.mongodb.org/mongo-driver/v2/mongo
+```
+
+**Step 2: Connect and insert**
+
+Save as **`main.go`**:
+
+go
+
+```
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "os"
+    "time"
+
+    "go.mongodb.org/mongo-driver/v2/bson"
+    "go.mongodb.org/mongo-driver/v2/mongo"
+    "go.mongodb.org/mongo-driver/v2/mongo/options"
+)
+
+func main() {
+    ctx, cancel := context.WithTimeout(
+        context.Background(), 10*time.Second,
+    )
+    defer cancel()
+
+    uri := os.Getenv("MONGODB_URI")
+    client, err := mongo.Connect(
+        options.Client().ApplyURI(uri),
+    )
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer client.Disconnect(context.Background())
+
+    users := client.Database("myapp").
+        Collection("users")
+
+    _, err = users.InsertOne(ctx, bson.D{
+        {Key: "name", Value: "Alice"},
+        {Key: "role", Value: "developer"},
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    var user bson.M
+    err = users.FindOne(
+        ctx, bson.M{"name": "Alice"},
+    ).Decode(&user)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Println(user)
+}
+```
+
+**Step 3: Run**
+
+bash
+
+```
+go run .
+```
+
+#### **F. C# / .NET — for enterprise APIs**
+
+Common uses: ASP.NET Core, business applications, Unity server components
+
+**Required library:** **`MongoDB.Driver`**
+
+**Step 1: Create a project and install**
+
+bash
+
+```
+dotnet new console -n MongoDemo
+cd MongoDemo
+dotnet add package MongoDB.Driver
+```
+
+**Step 2: Connect and insert**
+
+csharp
+
+```
+using MongoDB.Driver;
+using MongoDB.Bson;
+
+var uri = Environment.GetEnvironmentVariable(
+    "MONGODB_URI"
+) ?? throw new Exception("Set MONGODB_URI");
+
+var client = new MongoClient(uri);
+var db = client.GetDatabase("myapp");
+var users = db.GetCollection<BsonDocument>("users");
+
+await users.InsertOneAsync(new BsonDocument
+{
+    { "name", "Alice" },
+    { "role", "developer" }
+});
+
+var user = await users.Find(
+    new BsonDocument("name", "Alice")
+).FirstOrDefaultAsync();
+
+Console.WriteLine(user);
+```
+
+**Step 3: Run**
+
+bash
+
+```
+dotnet run
+```
+
+#### **G. PHP — for web applications**
+
+**Required libraries**
+
+- **`mongodb/mongodb`** — PHP library.
+- **`ext-mongodb`** — underlying PHP extension, which must be installed.
+
+**Step 1: Install the PHP extension** using PECL or your platform's package manager, then install the library:
+
+bash
+
+```
+composer require mongodb/mongodb
+```
+
+**Step 2: Connect and insert**
+
+php
+
+```
+<?php
+
+require 'vendor/autoload.php';
+
+$uri = getenv('MONGODB_URI');
+$client = new MongoDB\Client($uri);
+
+$users = $client->selectCollection(
+    'myapp',
+    'users'
+);
+
+$users->insertOne([
+    'name' => 'Alice',
+    'role' => 'developer'
+]);
+
+$user = $users->findOne([
+    'name' => 'Alice'
+]);
+
+var_dump($user);
+```
+
+**Step 3:** Set **`MONGODB_URI`** and run:
+
+bash
+
+```
+php app.php
+```
+
+Official guide: MongoDB PHP Library
+
+#### **H. Ruby — for Rails backends**
+
+**Required library:** **`mongo`**, the official Ruby driver.
+
+**Step 1: Install**
+
+bash
+
+```
+gem install mongo
+```
+
+**Step 2: Connect and insert**
+
+ruby
+
+```
+require "mongo"
+
+client = Mongo::Client.new(
+  ENV.fetch("MONGODB_URI")
+)
+
+users = client[:users]
+
+users.insert_one(
+  { name: "Alice", role: "developer" }
+)
+
+user = users.find(name: "Alice").first
+puts user.inspect
+
+client.close
+```
+
+**Step 3: Run**
+
+bash
+
+```
+ruby app.rb
+```
+
+#### **I. Kotlin — for JVM backends**
+
+**Required libraries:** MongoDB Kotlin Coroutine Driver, plus Kotlin coroutines.
+
+**Step 1:** Create a Kotlin project and add the driver using the dependency instructions in the official guide.
+
+kotlin
+
+```
+dependencies {
+    implementation(
+        "org.mongodb:mongodb-driver-kotlin-coroutine:5.5.1"
+    )
+}
+```
+
+**Step 2: Connect**
+
+kotlin
+
+```
+import com.mongodb.kotlin.client.coroutine.MongoClient
+import kotlinx.coroutines.runBlocking
+import org.bson.Document
+
+fun main() = runBlocking {
+    val client = MongoClient.create(
+        System.getenv("MONGODB_URI")
+    )
+
+    val db = client.getDatabase("myapp")
+    val users = db.getCollection<Document>("users")
+
+    users.insertOne(
+        Document("name", "Alice")
+            .append("role", "developer")
+    )
+
+    val user = users.find(
+        Document("name", "Alice")
+    ).first()
+
+    println(user)
+    client.close()
+}
+```
+
+The Kotlin coroutine driver uses suspending operations, so database calls run inside a coroutine context. Confirm the dependency version and Kotlin compatibility in the current documentation.
