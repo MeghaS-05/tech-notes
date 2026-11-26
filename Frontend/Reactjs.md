@@ -29,10 +29,10 @@ For example, instead of repeating a product UI 100 times, we create one `Product
 
 ### **What do we need before creating a React project?**
 
-**Requirement:**
+<u>**Requirement:**</u>
 
 - Node.js (allows us to run JS outside the browser)
-- Node Package Manager (npm) — allows us to install packages, manage dependencies, run proect scripts, execute development/build tools
+- Node Package Manager (npm) — allows us to install packages, manage dependencies, run project scripts, execute development/build tools
 
 Now, React need a **build tool** which helps us to develop and prepare a web application. Popularbuild tools are Vite, Parcel, Rsbuild.
 
@@ -52,7 +52,7 @@ Instead of opening: file:///C:/project/index.html
 
 we run : npm run dev and get something like http://localhost:5173
 
-The development server watches our files and server the application while we work.
+The development server watches our files and serves the application while we work.
 
 One of the useful features provided by Vite is **Hot Module Replacement (HMR)**.
 
@@ -84,9 +84,9 @@ It provides:
 
 Vite's current architecture uses **Rolldown** for production builds.
 
-## Methods to create React Project
+### Methods to create React Project
 
-### Method 1 — create React App with Vite
+#### Method 1 — create React App with Vite
 
 **Step 1** : Create the project using cmd “npm create vite@latest”. Vite will ask questions like project name, framework, variant  or directly use cmd “npm create vite@latest my-react-app — —template react”
 
@@ -96,25 +96,25 @@ Vite's current architecture uses **Rolldown** for production builds.
 
 **Step 4** : Start the Development Server
 
-### **Method 2 — using Vite and Typescript**
+#### **Method 2 — using Vite and Typescript**
 
 use cmd “npm create vite@latest my-react-app — —template react-ts”
 
 then cd my-react-app —> npm install —> npm run dev
 
-### **Method 3 — Use a React Framework**
+#### **Method 3 — Use a React Framework**
 
 if Next.js : “npx create-next-app@latest”
 
 if React Router : “npx create-react-router@latest”
 
-### **Method 4 — Try React without Installing Anything**
+#### **Method 4 — Try React without Installing Anything**
 
 If you only want to experiment with React, you don't necessarily need to create a local project.
 
 React's documentation provides online sandboxes, and platforms such as CodeSandbox and StackBlitz can run React projects in the browser.
 
-### **Method 5 — Manual React Setup**
+#### **Method 5 — Manual React Setup**
 
 You can also create a React application from scratch manually.
 
@@ -122,9 +122,7 @@ For example, you could install Vite yourself : “npm install -D vite”. Then c
 
 This teaches you what the tooling is doing, but it requires more configuration.React's documentation explicitly describes this as a "build a React app from scratch" approach and lists Vite, Parcel, and Rsbuild as possible build tools.
 
-## **React ES6**
-
-**Definition:**
+### **React ES6**
 
 ES6 (ECMAScript 2015) is a modern version of JavaScript that provides features commonly used in React, such as classes, arrow functions, **`let`**, **`const`**, destructuring, spread operators, modules, and template strings.
 
@@ -144,9 +142,7 @@ function App() {
 }
 ```
 
-## **ES6 Classes**
-
-**Definition:**
+### **ES6 Classes**
 
 Classes are templates for creating objects and defining their properties and methods.
 
@@ -181,9 +177,7 @@ const person = new Person("John");
 console.log(person.greet());
 ```
 
-## **ES6 Arrow Function**
-
-**Definition:**
+### **ES6 Arrow Function**
 
 Arrow functions provide a shorter syntax for writing functions.
 
@@ -205,9 +199,7 @@ const add = (a, b)=> {
 console.log(add(2, 3));
 ```
 
-## **ES6 Variables**
-
-**Definition:**
+### **ES6 Variables**
 
 ES6 provides **`let`** and **`const`** for declaring variables.
 
@@ -227,9 +219,7 @@ age= 21;
 const name = "John";
 ```
 
-## **ES6 Array `map()`**
-
-**Definition:**
+### **ES6 Array `map()`**
 
 **`map()`** creates a new array by applying a function to every element of an array.
 
@@ -254,9 +244,7 @@ console.log(doubled);
 // [2, 4, 6]
 ```
 
-## **ES6 Destructuring**
-
-**Definition:**
+### **ES6 Destructuring**
 
 Destructuring extracts values from arrays or properties from objects into variables.
 
@@ -282,9 +270,7 @@ console.log(name);
 console.log(age);
 ```
 
-## **ES6 Spread Operator**
-
-**Definition:**
+### **ES6 Spread Operator**
 
 The spread operator **`...`** expands the elements of an array or the properties of an object.
 
@@ -307,9 +293,7 @@ console.log(newNumbers);
 // [1, 2, 3, 4, 5]
 ```
 
-## **ES6 Modules**
-
-**Definition:**
+### **ES6 Modules**
 
 Modules allow JavaScript code to be separated into different files and reused using **`export`** and **`import`**.
 
@@ -320,7 +304,7 @@ Modules allow JavaScript code to be separated into different files and reused us
 export default value;
 
 // Import
-import valuefrom "./file";
+import value from "./file";
 ```
 
 **Example:**
@@ -334,12 +318,10 @@ export default function App() {
 
 ```jsx
 // main.js
-import Appfrom "./App";
+import App from "./App";
 ```
 
-## **ES6 Ternary Operator**
-
-**Definition:**
+### **ES6 Ternary Operator**
 
 The ternary operator is a short way to write an **`if...else`** condition.
 
@@ -360,9 +342,7 @@ console.log(result);
 // Adult
 ```
 
-## **ES6 Template String**
-
-**Definition:**
+### **ES6 Template String**
 
 Template strings allow strings to contain variables and expressions using backticks **```** and **`${}`**.
 
@@ -383,9 +363,7 @@ const message = `My name is${name} and I am${age} years old.`;
 console.log(message);
 ```
 
-## **React JSX Intro**
-
-**Definition:**
+### **React JSX Intro**
 
 JSX is a syntax extension that allows HTML-like code to be written inside JavaScript.
 
@@ -403,11 +381,7 @@ function App() {
 }
 ```
 
----
-
-## **2. React JSX Expressions**
-
-**Definition:**
+### **React JSX Expressions**
 
 JSX expressions allow JavaScript values, variables, and expressions to be written inside **`{}`**.
 
@@ -436,15 +410,13 @@ function App() {
 
 ---
 
-## **3. React JSX Attributes**
-
-**Definition:**
+### **React JSX Attributes**
 
 JSX attributes are used to provide properties or values to HTML elements and React components.
 
-### **Types**
+#### **Types**
 
-### **A. String Attribute**
+**A. String Attribute**
 
 **Syntax:**
 
@@ -458,7 +430,7 @@ JSX attributes are used to provide properties or values to HTML elements and Rea
 <img src="image.jpg" alt="Profile" />
 ```
 
-### **B. JavaScript Expression Attribute**
+**B. JavaScript Expression Attribute**
 
 **Syntax:**
 
@@ -474,7 +446,7 @@ const image = "profile.jpg";
 <img src={image} alt="Profile" />
 ```
 
-### **C. `className`**
+**C. `className`**
 
 **Syntax:**
 
@@ -488,7 +460,7 @@ const image = "profile.jpg";
 <div className="container">Hello</div>
 ```
 
-### **D. `style`**
+**D. `style`**
 
 **Syntax:**
 
@@ -504,7 +476,7 @@ const image = "profile.jpg";
 </h1>
 ```
 
-### **E. Boolean Attribute**
+**E. Boolean Attribute**
 
 **Syntax:**
 
@@ -520,9 +492,7 @@ const image = "profile.jpg";
 
 ---
 
-# **4. React JSX If Statements**
-
-**Definition:**
+### **React JSX If Statements**
 
 **`if`** statements are used to execute different code based on a condition.
 
@@ -550,17 +520,13 @@ function App() {
 
 ---
 
-# **5. React Components**
-
-**Definition:**
+### **React Components**
 
 Components are reusable building blocks of a React application.
 
-### **Types**
+#### **Types**
 
-### **A. Function Component**
-
-**Definition:**
+**A. Function Component**
 
 A JavaScript function that returns JSX.
 
@@ -580,9 +546,7 @@ function Welcome() {
 }
 ```
 
-### **B. Class Component**
-
-**Definition:**
+**B. Class Component**
 
 A component created using an ES6 class that extends **`React.Component`**.
 
@@ -606,9 +570,7 @@ class Welcome extends React.Component {
 }
 ```
 
-### **C. Nested Component**
-
-**Definition:**
+**C. Nested Component**
 
 A component rendered inside another component.
 
@@ -631,9 +593,7 @@ function App() {
 
 ---
 
-# **6. React Class**
-
-**Definition:**
+### **React Class**
 
 A React class component is an ES6 class that extends **`React.Component`** and contains a **`render()`** method.
 
@@ -661,7 +621,7 @@ class App extends React.Component {
 export default App;
 ```
 
-### **Class Component with State**
+**Class Component with State**
 
 **Syntax:**
 
@@ -697,9 +657,7 @@ class Counter extends React.Component {
 
 ---
 
-# **7. React Props**
-
-**Definition:**
+### **React Props**
 
 Props are data passed from a parent component to a child component.
 
@@ -721,39 +679,39 @@ function App() {
 }
 ```
 
-### **Types of Props**
+#### **Types of Props**
 
-### **A. String Props**
+**A. String Props**
 
 ```jsx
 <Welcome name="John" />
 ```
 
-### **B. Number Props**
+**B. Number Props**
 
 ```jsx
 <Welcome age={25} />
 ```
 
-### **C. Boolean Props**
+**C. Boolean Props**
 
 ```jsx
 <Welcome isAdmin={true} />
 ```
 
-### **D. Array Props**
+**D. Array Props**
 
 ```jsx
 <Welcome items={["Apple", "Mango"]} />
 ```
 
-### **E. Object Props**
+**E. Object Props**
 
 ```jsx
 <Welcome user={{ name: "John", age: 25 }} />
 ```
 
-### **F. Function Props**
+**F. Function Props**
 
 ```jsx
 function Child({ handleClick }) {
@@ -771,13 +729,11 @@ function App() {
 
 ---
 
-# **8. React Props Destructuring**
-
-**Definition:**
+### **React Props Destructuring**
 
 Props destructuring extracts prop values directly into variables.
 
-### **A. Destructuring in Function Parameter**
+#### **A. Destructuring in Function Parameter**
 
 **Syntax:**
 
@@ -799,7 +755,7 @@ function User({ name, age }) {
 }
 ```
 
-### **B. Destructuring Inside Function**
+#### **B. Destructuring Inside Function**
 
 **Syntax:**
 
@@ -821,9 +777,7 @@ function User(props) {
 
 ---
 
-# **9. React Props Children**
-
-**Definition:**
+### **React Props Children**
 
 **`children`** is a special prop that contains the content placed between a component's opening and closing tags.
 
@@ -858,13 +812,11 @@ function App() {
 
 ---
 
-# **10. React Events**
-
-**Definition:**
+### **React Events**
 
 React events are used to respond to user actions such as clicks, typing, submitting forms, and mouse actions.
 
-### **A. `onClick`**
+**A. `onClick`**
 
 **Syntax:**
 
@@ -884,7 +836,7 @@ function App() {
 }
 ```
 
-### **B. `onChange`**
+**B. `onChange`**
 
 **Syntax:**
 
@@ -904,7 +856,7 @@ function App() {
 }
 ```
 
-### **C. `onSubmit`**
+**C. `onSubmit`**
 
 **Syntax:**
 
@@ -929,7 +881,7 @@ function App() {
 }
 ```
 
-### **D. `onMouseEnter`**
+**D. `onMouseEnter`**
 
 **Syntax:**
 
@@ -949,7 +901,7 @@ function App() {
 }
 ```
 
-### **E. `onKeyDown`**
+**E. `onKeyDown`**
 
 **Syntax:**
 
@@ -971,13 +923,11 @@ function App() {
 
 ---
 
-# **11. React Conditionals**
-
-**Definition:**
+### **React Conditionals**
 
 Conditional rendering displays different JSX based on a condition.
 
-### **A. `if` Statement**
+**A. `if` Statement**
 
 **Example:**
 
@@ -993,7 +943,7 @@ function App() {
 }
 ```
 
-### **B. Ternary Operator**
+**B. Ternary Operator**
 
 **Syntax:**
 
@@ -1015,7 +965,7 @@ function App() {
 }
 ```
 
-### **C. Logical AND `&&`**
+**C. Logical AND `&&`**
 
 **Syntax:**
 
@@ -1037,7 +987,7 @@ function App() {
 }
 ```
 
-### **D. Logical OR `||`**
+**D. Logical OR `||`**
 
 **Syntax:**
 
@@ -1057,13 +1007,11 @@ function App() {
 
 ---
 
-# **12. React Lists**
-
-**Definition:**
+### **React Lists**
 
 Lists are used to render multiple elements from an array.
 
-### **A. Rendering Array with `map()`**
+**A. Rendering Array with `map()`**
 
 **Syntax:**
 
@@ -1089,7 +1037,7 @@ function App() {
 }
 ```
 
-### **B. List with Objects**
+**B. List with Objects**
 
 **Syntax:**
 
@@ -1120,7 +1068,7 @@ function App() {
 }
 ```
 
-### **C. List with Components**
+**C. List with Components**
 
 **Syntax:**
 
@@ -1153,110 +1101,16 @@ function App() {
 }
 ```
 
-# **12. React Lists**
-
-**Definition:**
-
-Lists are used to render multiple elements from an array.
-
-### **A. Rendering Array with `map()`**
-
-**Syntax:**
-
-```jsx
-array.map((item) => (
-  <Element>{item}</Element>
-))
-```
-
-**Example:**
-
-```jsx
-function App() {
-  const fruits = ["Apple", "Mango", "Banana"];
-
-  return (
-    <ul>
-      {fruits.map((fruit) => (
-        <li key={fruit}>{fruit}</li>
-      ))}
-    </ul>
-  );
-}
-```
-
-### **B. List with Objects**
-
-**Syntax:**
-
-```jsx
-array.map((item) => (
-  <Element key={item.id}>
-    {item.property}
-  </Element>
-))
-```
-
-**Example:**
-
-```jsx
-function App() {
-  const users = [
-    { id: 1, name: "John" },
-    { id: 2, name: "Alice" }
-  ];
-
-  return (
-    <ul>
-      {users.map((user) => (
-        <li key={user.id}>{user.name}</li>
-      ))}
-    </ul>
-  );
-}
-```
-
-### **C. List with Components**
-
-**Syntax:**
-
-```jsx
-array.map((item) => (
-  <Component key={item.id} {...item} />
-))
-```
-
-**Example:**
-
-```jsx
-function User({ name }) {
-  return <li>{name}</li>;
-}
-
-function App() {
-  const users = [
-    { id: 1, name: "John" },
-    { id: 2, name: "Alice" }
-  ];
-
-  return (
-    <ul>
-      {users.map((user) => (
-        <User key={user.id} name={user.name} />
-      ))}
-    </ul>
-  );
-}
-```
+### **React Forms**
 
 A **form** in React is used to collect user input. React generally handles form values through **state**, making the form a **controlled component**.
 
-### **Types**
+**Types**
 
 1. **Controlled Forms**
 2. **Uncontrolled Forms**
 
-### **Sub-types of form inputs**
+**Sub-types of form inputs**
 
 - Text input
 - Password
@@ -1268,7 +1122,7 @@ A **form** in React is used to collect user input. React generally handles form 
 - Radio
 - File input
 
-### **Syntax — Controlled Form**
+**Syntax — Controlled Form**
 
 ```jsx
 import { useState } from "react";
@@ -1290,7 +1144,7 @@ function Form() {
 }
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function Login() {
@@ -1315,7 +1169,7 @@ function Login() {
 }
 ```
 
-### **Controlled vs Uncontrolled**
+**Controlled vs Uncontrolled**
 
 | **Controlled** | **Uncontrolled** |
 | --- | --- |
@@ -1325,7 +1179,7 @@ function Login() {
 | Easier validation | Simpler for some cases |
 | React controls input | DOM controls input |
 
-### **Important**
+**Important**
 
 ```jsx
 value={state}
@@ -1341,11 +1195,11 @@ provides an initial value without controlling it through state.
 
 ---
 
-# **React Forms Submit**
+### **React Forms Submit**
 
 Form submission is handled using the form's **`onSubmit`** event.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 <form onSubmit={handleSubmit}>
@@ -1357,7 +1211,7 @@ function handleSubmit(e) {
 }
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function Login() {
@@ -1384,13 +1238,13 @@ function Login() {
 }
 ```
 
-### **Types of submission**
+**Types of submission**
 
 1. **Normal browser submission**
 2. **React-controlled submission**
 3. **Async submission**
 
-### **Async example**
+#### **Async example**
 
 ```jsx
 const handleSubmit = async (e) => {
@@ -1405,7 +1259,7 @@ const handleSubmit = async (e) => {
 };
 ```
 
-### **Important**
+**Important**
 
 Always use:
 
@@ -1417,15 +1271,13 @@ when you don't want the browser to reload/navigate away.
 
 ---
 
-# **React Textarea**
-
-### **Definition**
+### **React Textarea**
 
 **`textarea`** is used for multi-line text.
 
 Unlike HTML, React normally controls it using **`value`**.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 <textarea
@@ -1434,7 +1286,7 @@ Unlike HTML, React normally controls it using **`value`**.
 />
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function Message() {
@@ -1450,24 +1302,24 @@ function Message() {
 }
 ```
 
-### **Types**
+**Types**
 
 1. Controlled textarea
 2. Uncontrolled textarea
 
-### **Controlled**
+**Controlled**
 
 ```jsx
 <textarea value={message} onChange={handleChange} />
 ```
 
-### **Uncontrolled**
+**Uncontrolled**
 
 ```jsx
 <textarea defaultValue="Hello" ref={textRef} />
 ```
 
-### **Important**
+**Important**
 
 Don't use:
 
@@ -1487,13 +1339,11 @@ Use:
 
 ---
 
-# **React Select**
-
-### **Definition**
+### **React Select**
 
 **`select`** creates a dropdown menu.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 <select value={country} onChange={handleChange}>
@@ -1502,7 +1352,7 @@ Use:
 </select>
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function Country() {
@@ -1525,12 +1375,12 @@ function Country() {
 }
 ```
 
-### **Types**
+**Types**
 
 - Single select
 - Multiple select
 
-### **Multiple select**
+**Multiple select**
 
 ```jsx
 <select
@@ -1547,13 +1397,11 @@ function Country() {
 
 ---
 
-# **React Multiple Inputs**
-
-### **Definition**
+### **React Multiple Inputs**
 
 A form may contain multiple inputs. Instead of creating separate handlers, we can use **one generic handler**.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 const handleChange = (e) => {
@@ -1566,7 +1414,7 @@ const handleChange = (e) => {
 };
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function Register() {
@@ -1609,13 +1457,13 @@ function Register() {
 }
 ```
 
-### **Types**
+**Types**
 
 1. Separate state for each input
 2. Single object state
 3. Generic change handler
 
-### **Key concept**
+**Key concept**
 
 ```jsx
 [name]: value
@@ -1625,13 +1473,11 @@ is a **computed property name**.
 
 ---
 
-# **React Checkbox**
-
-### **Definition**
+**React Checkbox**
 
 Checkbox allows the user to select/deselect a boolean value.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 <input
@@ -1641,7 +1487,7 @@ Checkbox allows the user to select/deselect a boolean value.
 />
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function Terms() {
@@ -1661,14 +1507,14 @@ function Terms() {
 }
 ```
 
-### **Types**
+**Types**
 
 1. Single checkbox
 2. Multiple checkboxes
 3. Checkbox group
 4. Select all / deselect all
 
-### **Multiple checkboxes**
+**Multiple checkboxes**
 
 ```jsx
 const [skills, setSkills] = useState([]);
@@ -1684,7 +1530,7 @@ const handleSkill = (e) => {
 };
 ```
 
-### **Important**
+**Important**
 
 Checkbox uses:
 
@@ -1702,13 +1548,11 @@ to represent its selected state.
 
 ---
 
-# **React Radio**
-
-### **Definition**
+**React Radio**
 
 Radio buttons allow selecting **one option from a group**.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 <input
@@ -1720,7 +1564,7 @@ Radio buttons allow selecting **one option from a group**.
 />
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function Gender() {
@@ -1754,12 +1598,12 @@ function Gender() {
 }
 ```
 
-### **Types**
+**Types**
 
 - Single radio group
 - Dynamic radio group
 
-### **Important**
+**Important**
 
 Radio buttons in the same group should have the same:
 
@@ -1769,9 +1613,7 @@ name
 
 ---
 
-# **14. React Portals**
-
-### **Definition**
+### **React Portals**
 
 A **Portal** allows a React component to render its UI into a different DOM node outside its normal parent DOM hierarchy.
 
@@ -1820,14 +1662,14 @@ function Modal() {
 }
 ```
 
-### **Types**
+**Types**
 
 1. Modal Portal
 2. Tooltip Portal
 3. Notification Portal
 4. Overlay Portal
 
-### **Important concept**
+**Important concept**
 
 A portal changes the **DOM location**, but the component remains part of the same **React tree**.
 
@@ -1835,9 +1677,7 @@ Therefore, React context and event propagation still work according to the React
 
 ---
 
-# **15. React Suspense**
-
-### **Definition**
+### **React Suspense**
 
 **`Suspense`** allows React to display a fallback UI while some child content is not ready.
 
@@ -1847,7 +1687,7 @@ Commonly used with:
 - Code splitting
 - Suspense-enabled data sources
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 <Suspense fallback={<Loading />}>
@@ -1855,7 +1695,7 @@ Commonly used with:
 </Suspense>
 ```
 
-### **Example — Lazy Loading**
+**Example — Lazy Loading**
 
 ```jsx
 import { lazy, Suspense } from "react";
@@ -1871,14 +1711,14 @@ function App() {
 }
 ```
 
-### **Types**
+**Types**
 
 1. Component lazy loading
 2. Code splitting
 3. Suspense boundaries
 4. Suspense-enabled data loading
 
-### **Nested Suspense**
+**Nested Suspense**
 
 ```jsx
 <Suspense fallback={<PageLoading />}>
@@ -1890,7 +1730,7 @@ function App() {
 </Suspense>
 ```
 
-### **Important**
+**Important**
 
 **`Suspense`** is not simply an alternative to:
 
@@ -1902,13 +1742,11 @@ It works with React features that can **suspend rendering**.
 
 ---
 
-# **16. React CSS Styling**
-
-### **Definition**
+### **React CSS Styling**
 
 React supports multiple approaches to styling components.
 
-### **Types**
+**Types**
 
 1. Inline CSS
 2. External CSS
@@ -1919,9 +1757,9 @@ React supports multiple approaches to styling components.
 
 ---
 
-## **10.1 Inline CSS**
+#### **10.1 Inline CSS**
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 <div style={{ color: "red", fontSize: "20px" }}>
@@ -1929,7 +1767,7 @@ React supports multiple approaches to styling components.
 </div>
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 const style = {
@@ -1942,7 +1780,7 @@ function App() {
 }
 ```
 
-### **Important**
+**Important**
 
 CSS property names become camelCase:
 
@@ -1956,26 +1794,24 @@ becomes:
 backgroundColor
 ```
 
-### **Best for**
+**Best for**
 
 - Dynamic styles
 - Small component-specific styles
 
 ---
 
-# **React CSS Modules**
-
-### **Definition**
+#### **10.2. React CSS Modules**
 
 CSS Modules scope CSS class names locally to a component.
 
-### **File**
+**File**
 
 ```
 Button.module.css
 ```
 
-### **CSS**
+**CSS**
 
 ```css
 .button {
@@ -1984,7 +1820,7 @@ Button.module.css
 }
 ```
 
-### **Component**
+**Component**
 
 ```jsx
 import styles from "./Button.module.css";
@@ -1998,20 +1834,20 @@ function Button() {
 }
 ```
 
-### **Types**
+**Types**
 
 1. Local classes
 2. Local animations
 3. Conditional classes
 4. Composed classes
 
-### **Conditional class**
+**Conditional class**
 
 ```jsx
 <div className={`${styles.card} ${active ? styles.active : ""}`}>
 ```
 
-### **Advantage**
+**Advantage**
 
 Normal CSS:
 
@@ -2025,9 +1861,7 @@ CSS Modules generate scoped class names.
 
 ---
 
-# **React CSS-in-JS**
-
-### **Definition**
+#### **10.3. React CSS-in-JS**
 
 CSS-in-JS means writing CSS using JavaScript or JavaScript-based APIs.
 
@@ -2037,7 +1871,7 @@ Popular approaches/libraries include:
 - Emotion
 - other CSS-in-JS solutions
 
-### **Example concept**
+**Example concept**
 
 ```jsx
 const Button = styled.button`
@@ -2046,7 +1880,7 @@ const Button = styled.button`
 `;
 ```
 
-### **Dynamic styling**
+**Dynamic styling**
 
 ```jsx
 const Button = styled.button`
@@ -2063,20 +1897,20 @@ Usage:
 </Button>
 ```
 
-### **Types**
+**Types**
 
 1. Styled components
 2. Dynamic styles
 3. Theme-based styling
 4. Component-scoped styling
 
-### **Advantages**
+**Advantages**
 
 - Dynamic styles
 - Component-level styling
 - Theme support
 
-### **Disadvantages**
+**Disadvantages**
 
 - Additional abstraction
 - Runtime/build considerations depending on library
@@ -2084,9 +1918,7 @@ Usage:
 
 ---
 
-# **17. React Router**
-
-### **Definition**
+### **React Router**
 
 React Router is used for **client-side routing** in React applications.
 
@@ -2105,7 +1937,7 @@ It allows different URLs to render different components without a full page relo
 - Layout routes
 - Protected routes
 
-### **Basic syntax**
+**Basic syntax**
 
 ```jsx
 import {
@@ -2126,7 +1958,7 @@ function App() {
 }
 ```
 
-### **Navigation**
+**Navigation**
 
 ```jsx
 import { Link } from "react-router-dom";
@@ -2136,7 +1968,7 @@ import { Link } from "react-router-dom";
 </Link>
 ```
 
-### **Dynamic route**
+**Dynamic route**
 
 ```jsx
 <Route path="/users/:id" element={<User />} />
@@ -2154,7 +1986,7 @@ function User() {
 }
 ```
 
-### **Programmatic navigation**
+**Programmatic navigation**
 
 ```jsx
 const navigate = useNavigate();
@@ -2162,7 +1994,7 @@ const navigate = useNavigate();
 navigate("/dashboard");
 ```
 
-### **Nested routes**
+**Nested routes**
 
 ```jsx
 <Route path="/dashboard" element={<Dashboard />}>
@@ -2171,7 +2003,7 @@ navigate("/dashboard");
 </Route>
 ```
 
-### **Types**
+**Types**
 
 1. Static routes
 2. Dynamic routes
@@ -2181,7 +2013,7 @@ navigate("/dashboard");
 6. Error routes
 7. Catch-all routes
 
-### **Important**
+**Important**
 
 Understand these separately:
 
@@ -2209,11 +2041,11 @@ Render child route
 
 ---
 
-This topic can refer to **React UI transitions** and the React **Transition APIs**.
+### **React UI transitions and the React Transition APIs.**
 
-## **A. CSS Transitions**
+#### **A. CSS Transitions**
 
-### **Example**
+**Example**
 
 ```css
 .button {
@@ -2227,19 +2059,17 @@ This topic can refer to **React UI transitions** and the React **Transition APIs
 
 ---
 
-## **B. `useTransition`**
-
-### **Definition**
+#### **B. `useTransition`**
 
 **`useTransition`** allows React to mark an update as **non-urgent**, so urgent UI updates can remain responsive.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 const [isPending, startTransition] = useTransition();
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function Search() {
@@ -2271,18 +2101,18 @@ function Search() {
 }
 ```
 
-### **Types**
+**Types**
 
 1. Urgent update
 2. Transition/non-urgent update
 
-### **Important**
+**Important**
 
 **`useTransition`** is about **update priority**, not CSS animation.
 
 ---
 
-## **C. `startTransition`**
+**C. `startTransition`**
 
 Can also be used directly:
 
@@ -2296,13 +2126,11 @@ startTransition(() => {
 
 ---
 
-# **18. React Forward Ref**
-
-### **Definition**
+### **React Forward Ref**
 
 **`forwardRef`** historically allowed a parent component to pass a **`ref`** through a component to a child DOM element.
 
-### **Traditional syntax**
+**Traditional syntax**
 
 ```jsx
 const Input = forwardRef(function Input(props, ref) {
@@ -2330,13 +2158,13 @@ function App() {
 }
 ```
 
-### **Types**
+**Types**
 
 1. DOM ref forwarding
 2. Component ref forwarding
 3. Ref + custom methods
 
-### **Important modern React note**
+**Important modern React note**
 
 In **React 19**, **`ref`** can be passed as a prop to function components, so **`forwardRef`** is no longer required for this common use case.
 
@@ -2352,19 +2180,17 @@ For intermediate-level notes, know **both the traditional `forwardRef` pattern a
 
 ---
 
-# **19. React HOC — Higher Order Component**
-
-### **Definition**
+### **React HOC — Higher Order Component**
 
 A **Higher Order Component (HOC)** is a function that takes a component and returns an enhanced component.
 
-### **Basic formula**
+**Basic formula**
 
 ```
 HOC(Component) → EnhancedComponent
 ```
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 function withAuth(Component) {
@@ -2378,13 +2204,13 @@ function withAuth(Component) {
 }
 ```
 
-Usage:
+**Usage:**
 
 ```jsx
 const ProtectedDashboard = withAuth(Dashboard);
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function withLoading(Component) {
@@ -2398,13 +2224,13 @@ function withLoading(Component) {
 }
 ```
 
-Usage:
+**Usage:**
 
 ```jsx
 const UserListWithLoading = withLoading(UserList);
 ```
 
-### **Types**
+Types
 
 Common HOCs:
 
@@ -2415,7 +2241,7 @@ Common HOCs:
 5. Data-fetching HOC
 6. Feature/permission HOC
 
-### **Important rules**
+**Important rules**
 
 Don't mutate the original component:
 
@@ -2432,7 +2258,7 @@ return function EnhancedComponent(props) {
 };
 ```
 
-### **HOC vs Custom Hook**
+**HOC vs Custom Hook**
 
 | **HOC** | **Custom Hook** |
 | --- | --- |
@@ -2443,9 +2269,7 @@ return function EnhancedComponent(props) {
 
 ---
 
-# **20. React Sass**
-
-### **Definition**
+### **React Sass**
 
 **Sass/SCSS** is a CSS preprocessor that provides features such as:
 
@@ -2458,19 +2282,19 @@ return function EnhancedComponent(props) {
 
 React can use Sass by compiling **`.scss`** files.
 
-### **Installation**
+**Installation**
 
 ```bash
 npm install sass
 ```
 
-### **File**
+**File**
 
 ```
 App.scss
 ```
 
-### **SCSS**
+**SCSS**
 
 ```scss
 $primary: blue;
@@ -2485,7 +2309,7 @@ $primary: blue;
 }
 ```
 
-### **React**
+**React**
 
 ```jsx
 import "./App.scss";
@@ -2499,7 +2323,7 @@ function App() {
 }
 ```
 
-### **Types**
+**Types**
 
 1. Variables
 2. Nesting
@@ -2509,7 +2333,7 @@ function App() {
 6. Modules
 7. Operators
 
-### **Variables**
+**Variables**
 
 ```scss
 $primary-color: blue;
@@ -2519,7 +2343,7 @@ $primary-color: blue;
 }
 ```
 
-### **Nesting**
+**Nesting**
 
 ```scss
 .card {
@@ -2535,7 +2359,7 @@ $primary-color: blue;
 }
 ```
 
-### **Mixin**
+**Mixin**
 
 ```scss
 @mixin flex-center {
@@ -2549,7 +2373,7 @@ $primary-color: blue;
 }
 ```
 
-### **Sass + CSS Modules**
+**Sass + CSS Modules**
 
 ```
 Button.module.scss
@@ -2573,15 +2397,13 @@ This is a very useful combination in React projects.
 
 ---
 
-# **21. REACT HOOKS**
+### **REACT HOOKS**
 
 Hooks are one of the most important areas for intermediate React.
 
 ---
 
-# **i. What are Hooks?**
-
-### **Definition**
+#### **i. What are Hooks?**
 
 **Hooks** are functions that allow functional components to use React features such as:
 
@@ -2593,37 +2415,37 @@ Hooks are one of the most important areas for intermediate React.
 
 Hooks were introduced in React 16.8.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 const [state, setState] = useState(initialValue);
 ```
 
-### **Types of Hooks**
+**Types of Hooks**
 
-### **Built-in Hooks**
+**Built-in Hooks**
 
-#### **State Hooks**
+**State Hooks**
 
 ```
 useState
 useReducer
 ```
 
-#### **Context Hook**
+**Context Hook**
 
 ```
 useContext
 ```
 
-#### **Ref Hooks**
+**Ref Hooks**
 
 ```
 useRef
 useImperativeHandle
 ```
 
-#### **Effect Hooks**
+**Effect Hooks**
 
 ```
 useEffect
@@ -2631,7 +2453,7 @@ useLayoutEffect
 useInsertionEffect
 ```
 
-#### **Performance Hooks**
+**Performance Hooks**
 
 ```
 useMemo
@@ -2640,7 +2462,7 @@ useTransition
 useDeferredValue
 ```
 
-#### **Other Hooks**
+**Other Hooks**
 
 ```
 useId
@@ -2648,9 +2470,9 @@ useSyncExternalStore
 useDebugValue
 ```
 
-### **Custom Hooks**
+**Custom Hooks**
 
-Developer-created hooks:
+Hooks created by developers:
 
 ```jsx
 function useSomething() {
@@ -2660,19 +2482,17 @@ function useSomething() {
 
 ---
 
-# **ii. React `useState`**
-
-### **Definition**
+#### **ii. React `useState`**
 
 **`useState`** adds state to a functional component.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 const [state, setState] = useState(initialValue);
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function Counter() {
@@ -2690,17 +2510,17 @@ function Counter() {
 }
 ```
 
-### **Types**
+**Types**
 
 State can contain:
 
-1. Primitive
-2. Object
-3. Array
-4. Boolean
-5. Function/lazy initial state
+1. A primitive value
+2. An object
+3. An array
+4. A Boolean value
+5. A function or lazy initial state
 
-### **Object state**
+**Object state**
 
 ```jsx
 const [user, setUser] = useState({
@@ -2718,7 +2538,7 @@ setUser(prev => ({
 }));
 ```
 
-### **Array state**
+**Array state**
 
 ```jsx
 const [items, setItems] = useState([]);
@@ -2726,21 +2546,21 @@ const [items, setItems] = useState([]);
 setItems(prev => [...prev, newItem]);
 ```
 
-### **Functional update**
+**Functional update**
 
-Use when new state depends on previous state:
+Use a functional update when the new state depends on the previous state:
 
 ```jsx
 setCount(prev => prev + 1);
 ```
 
-### **Lazy initialization**
+**Lazy initialization**
 
 ```jsx
 const [data, setData] = useState(() => expensiveCalculation());
 ```
 
-### **Important**
+**Important**
 
 Never mutate state directly:
 
@@ -2760,13 +2580,11 @@ setUser(prev => ({
 
 ---
 
-# **iii. React `useEffect`**
-
-### **Definition**
+#### **iii. React `useEffect`**
 
 **`useEffect`** allows a component to synchronize with **external systems** after rendering.
 
-Common uses:
+Common uses include:
 
 - API calls
 - Event listeners
@@ -2775,7 +2593,7 @@ Common uses:
 - DOM APIs
 - Third-party libraries
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 useEffect(() => {
@@ -2787,7 +2605,7 @@ useEffect(() => {
 }, [dependencies]);
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function User() {
@@ -2803,9 +2621,9 @@ function User() {
 }
 ```
 
-### **Dependency types**
+**Dependency types**
 
-### **1. No dependency array**
+**1. No dependency array**
 
 ```jsx
 useEffect(() => {
@@ -2815,7 +2633,7 @@ useEffect(() => {
 
 Runs after every render.
 
-### **2. Empty dependency array**
+**2. Empty dependency array**
 
 ```jsx
 useEffect(() => {
@@ -2823,9 +2641,9 @@ useEffect(() => {
 }, []);
 ```
 
-Runs after initial mount.
+Runs after the initial mount.
 
-### **3. Dependency array**
+**3. Dependency array**
 
 ```jsx
 useEffect(() => {
@@ -2835,7 +2653,7 @@ useEffect(() => {
 
 Runs when **`userId`** changes.
 
-### **Cleanup**
+**Cleanup**
 
 ```jsx
 useEffect(() => {
@@ -2849,16 +2667,16 @@ useEffect(() => {
 }, []);
 ```
 
-### **Types**
+**Types**
 
 1. Data fetching
-2. Subscription
-3. Event listener
-4. Timer
+2. Subscriptions
+3. Event listeners
+4. Timers
 5. Synchronization
-6. Cleanup effect
+6. Cleanup effects
 
-### **Important intermediate concept**
+**Important intermediate concept**
 
 Don't use **`useEffect`** just to calculate derived values.
 
@@ -2880,23 +2698,21 @@ const fullName = `${firstName} ${lastName}`;
 
 ---
 
-# **iv. React `useContext`**
-
-### **Definition**
+#### **iv. React `useContext`**
 
 **`useContext`** allows a component to read values from React Context without manually passing props through every level.
 
 Useful for:
 
-- Theme
+- Themes
 - Authentication
 - Language
 - User settings
-- Global-ish application state
+- Application-wide state
 
-### **Syntax**
+**Syntax**
 
-Create context:
+Create a context:
 
 ```jsx
 const ThemeContext = createContext();
@@ -2910,13 +2726,13 @@ Provider:
 </ThemeContext>
 ```
 
-Consume:
+Consume the context:
 
 ```jsx
 const theme = useContext(ThemeContext);
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 const ThemeContext = createContext("light");
@@ -2936,15 +2752,15 @@ function Page() {
 }
 ```
 
-### **Types**
+**Types**
 
-1. Theme Context
-2. Auth Context
-3. User Context
-4. Language Context
+1. Theme context
+2. Authentication context
+3. User context
+4. Language context
 5. Application settings
 
-### **Important**
+**Important**
 
 Context is not automatically a replacement for every state-management library.
 
@@ -2952,24 +2768,22 @@ Use it mainly when many components need access to the same value.
 
 ---
 
-# **v. React `useRef`**
-
-### **Definition**
+#### **v. React `useRef`**
 
 **`useRef`** stores a mutable value that persists across renders **without causing a re-render when changed**.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 const ref = useRef(initialValue);
 ```
 
-### **Type 1 — DOM reference**
+**Type 1 — DOM reference**
 
 ```jsx
 const inputRef = useRef(null);
 
-<input ref={inputRef} />
+&lt;input ref={inputRef} /&gt;
 ```
 
 Then:
@@ -2978,7 +2792,7 @@ Then:
 inputRef.current.focus();
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function Input() {
@@ -2986,7 +2800,7 @@ function Input() {
 
   return (
     <>
-      <input ref={inputRef} />
+      &lt;input ref={inputRef} /&gt;
 
       <button onClick={() => inputRef.current.focus()}>
         Focus
@@ -2996,7 +2810,7 @@ function Input() {
 }
 ```
 
-### **Type 2 — Store mutable value**
+**Type 2 — Store a mutable value**
 
 ```jsx
 const countRef = useRef(0);
@@ -3004,15 +2818,15 @@ const countRef = useRef(0);
 countRef.current++;
 ```
 
-### **Types**
+**Types**
 
-1. DOM reference
-2. Mutable value
-3. Previous value storage
-4. Timer/interval ID
-5. Third-party library instance
+1. DOM references
+2. Mutable values
+3. Previous-value storage
+4. Timer or interval IDs
+5. Third-party library instances
 
-### **Previous value example**
+**Previous value example**
 
 ```jsx
 const previousValue = useRef(value);
@@ -3022,7 +2836,7 @@ useEffect(() => {
 }, [value]);
 ```
 
-### **Important**
+**Important**
 
 Changing:
 
@@ -3034,15 +2848,13 @@ does **not** trigger a render.
 
 ---
 
-# **vi. React `useReducer`**
-
-### **Definition**
+#### **vi. React `useReducer`**
 
 **`useReducer`** manages state using a **reducer function** and **actions**.
 
-Useful when state logic becomes complex.
+It's useful when state logic becomes complex.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 const [state, dispatch] = useReducer(reducer, initialState);
@@ -3062,7 +2874,7 @@ function reducer(state, action) {
 }
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function reducer(state, action) {
@@ -3108,14 +2920,14 @@ function Counter() {
 }
 ```
 
-### **Types**
+**Types**
 
 1. Simple reducer
-2. Object state reducer
+2. Object-state reducer
 3. Multiple-action reducer
-4. Reducer + Context
+4. Reducer with Context
 
-### **Reducer pattern**
+**Reducer pattern**
 
 ```
 UI
@@ -3129,21 +2941,19 @@ New State
 UI
 ```
 
-### **Important**
+**Important**
 
 A reducer should be **pure**.
 
-Don't do API calls or mutate external state inside the reducer.
+Don't make API calls or mutate external state inside the reducer.
 
 ---
 
-# **vii. React `useCallback`**
-
-### **Definition**
+#### **vii. React `useCallback`**
 
 **`useCallback`** memoizes a **function reference** between renders.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 const memoizedFunction = useCallback(
@@ -3154,7 +2964,7 @@ const memoizedFunction = useCallback(
 );
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 const handleClick = useCallback(() => {
@@ -3162,7 +2972,7 @@ const handleClick = useCallback(() => {
 }, []);
 ```
 
-### **Practical example**
+**Practical example**
 
 ```jsx
 function Parent() {
@@ -3194,28 +3004,26 @@ const Child = memo(function Child({ onClick }) {
 
 **`useCallback`** can help maintain the same function reference.
 
-### **Types**
+**Types**
 
-1. Stable callback
-2. Callback passed to memoized child
-3. Callback used in dependency arrays
-4. Event handler optimization
+1. Stable callbacks
+2. Callbacks passed to memoized children
+3. Callbacks used in dependency arrays
+4. Event-handler optimization
 
-### **Important**
+**Important**
 
 Don't use **`useCallback`** everywhere.
 
-It is a **performance optimization**, not something required for normal event handlers.
+It's a **performance optimization**, not something required for normal event handlers.
 
 ---
 
-# **viii. React `useMemo`**
-
-### **Definition**
+#### **viii. React `useMemo`**
 
 **`useMemo`** memoizes the **result of a calculation**.
 
-### **Syntax**
+**Syntax**
 
 ```jsx
 const result = useMemo(
@@ -3224,7 +3032,7 @@ const result = useMemo(
 );
 ```
 
-### **Example**
+**Example**
 
 ```jsx
 function ProductList({ products, search }) {
@@ -3248,19 +3056,19 @@ function ProductList({ products, search }) {
 }
 ```
 
-### **Types**
+**Types**
 
-1. Expensive calculation
+1. Expensive calculations
 2. Derived data
-3. Stable object reference
-4. Stable array reference
+3. Stable object references
+4. Stable array references
 
 ### **`useMemo` vs `useCallback`**
 
 | **`useMemo`** | **`useCallback`** |
 | --- | --- |
 | Memoizes a value | Memoizes a function |
-| Returns calculated result | Returns function |
+| Returns a calculated result | Returns a function |
 | **`useMemo(() => value, [])`** | **`useCallback(fn, [])`** |
 
 Conceptually:
@@ -3275,21 +3083,19 @@ is similar to:
 useMemo(() => fn, deps)
 ```
 
-### **Important**
+**Important**
 
-Don't memoize everything. Measure/understand the performance problem first.
+Don't memoize everything. First, measure and understand the performance problem.
 
 ---
 
-# **ix. React Custom Hooks**
+#### **ix. React Custom Hooks**
 
-### **Definition**
+A **Custom Hook** is a JavaScript function whose name starts with **`use`** and that can use other Hooks.
 
-A **Custom Hook** is a JavaScript function whose name starts with **`use`** and which can use other Hooks.
+It's used to **reuse stateful logic**, not UI.
 
-It is used to **reuse stateful logic**, not UI.
-
-### **Syntax**
+**Syntax**
 
 ```jsx
 function useSomething() {
@@ -3298,7 +3104,7 @@ function useSomething() {
 }
 ```
 
-### **Example — `useCounter`**
+**Example — `useCounter`**
 
 ```jsx
 function useCounter(initialValue = 0) {
@@ -3341,9 +3147,9 @@ function Counter() {
 }
 ```
 
-### **Types**
+**Types**
 
-Common custom hooks:
+Common custom hooks include:
 
 1. **`useFetch`**
 2. **`useForm`**
@@ -3355,7 +3161,7 @@ Common custom hooks:
 8. **`useWindowSize`**
 9. **`useClickOutside`**
 
-### **Example — `useToggle`**
+**Example — `useToggle`**
 
 ```jsx
 function useToggle(initialValue = false) {
@@ -3386,11 +3192,11 @@ Custom Hooks reuse:
 > **logic**
 > 
 
-They do not reuse the actual component UI.
+They do not reuse the component's UI.
 
 ---
 
-# **React Hooks — Quick Classification**
+#### **React Hooks — Quick Classification**
 
 This is worth memorizing for interviews and practical development:
 
@@ -3407,5 +3213,3 @@ This is worth memorizing for interviews and practical development:
 | **`useDeferredValue`** | Defer a value | Performance/Concurrency |
 | **`useId`** | Stable unique IDs | Utility |
 | Custom Hook | Reuse logic | Custom |
-
----
